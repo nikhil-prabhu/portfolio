@@ -15,12 +15,11 @@
         url(fonts/JetBrainsMono-VariableFont_wght.ttf) format("truetype");
     }
 
-    html,
-    body {
-        @apply bg-white dark:bg-gray-950;
-
-        @media (prefers-color-scheme: dark) {
-            color-scheme: dark;
-        }
+    :root {
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-size-adjust: 100%;
     }
 }
