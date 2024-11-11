@@ -2,11 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
+@layer base {
+    @font-face {
+        font-family: "Inter";
+        src: local("Inter-VariableFont_opsz,wght.ttf"),
+        url(fonts/Inter-VariableFont_opsz,wght.ttf) format("truetype");
+    }
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+    @font-face {
+        font-family: "JetBrains Mono";
+        src: local("JetBrainsMono-VariableFont_wght"),
+        url(fonts/JetBrainsMono-VariableFont_wght.ttf) format("truetype");
+    }
+
+    html,
+    body {
+        @apply bg-white dark:bg-gray-950;
+
+        @media (prefers-color-scheme: dark) {
+            color-scheme: dark;
+        }
+    }
 }
