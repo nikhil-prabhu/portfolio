@@ -50,6 +50,7 @@ export const links: LinksFunction = () => {
 export function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(0);
+  const primaryColor = "#007f5f";
 
   const menuItems = [
     {
@@ -96,7 +97,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               />
 
               <NavbarBrand>
-                <Logo color="black" size={64} />
+                <Logo color={primaryColor} size={64} />
               </NavbarBrand>
             </NavbarContent>
 
