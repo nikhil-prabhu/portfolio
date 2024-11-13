@@ -1,10 +1,12 @@
 import {
+  isRouteErrorResponse,
   Link,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteError,
 } from "@remix-run/react";
 
 import "./tailwind.css";
@@ -21,6 +23,7 @@ import {
 import React from "react";
 import Logo from "~/components/logo";
 import { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
+import { Typewriter } from "react-simple-typewriter";
 
 export const meta: MetaFunction = () => {
   return [
@@ -148,4 +151,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return <Outlet />;
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div className="flex h-screen items-center justify-center text-center">
+        <header className="flex flex-col items-center gap-9">
+          <h1 className="font-bold text-8xl">
+            <span className="text-primary">&lt;</span>
+            {error.status}
+            <span className="text-primary">/&gt;</span>
+          </h1>
+
+          <h2 className="text-4xl text-foreground-700">{error.statusText}</h2>
+        </header>
+      </div>
+    );
+  }
+
+  throw new Error(error instanceof Error ? error.message : "unknown error");
 }
