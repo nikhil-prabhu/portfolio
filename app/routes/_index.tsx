@@ -2,6 +2,7 @@ import { Typewriter } from "react-simple-typewriter";
 
 export default function Index() {
   const roles = ["Developer", "Cloud Engineer", "DevOps Engineer"];
+  const secondaryColor = "#80b918";
 
   return (
     <div className="flex h-screen items-center justify-center text-center">
@@ -15,12 +16,13 @@ export default function Index() {
 
         <h2 className="font-mono text-4xl text-foreground-700">
           I&apos;m a{" "}
-          <span className="font-bold">
+          <span className="font-bold text-primary">
             <Typewriter
               words={roles}
               cursor
               cursorBlinking
               cursorStyle="_"
+              cursorColor={secondaryColor}
               loop={false}
             />
           </span>
