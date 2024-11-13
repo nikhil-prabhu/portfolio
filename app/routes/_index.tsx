@@ -14,9 +14,9 @@ export default function Index() {
           </span>
         </h1>
 
-        <h2 className="font-mono text-4xl text-foreground-700">
+        <h2 className="text-4xl text-foreground-700">
           I&apos;m a{" "}
-          <span className="font-bold text-primary">
+          <span className="font-bold font-mono text-primary">
             <Typewriter
               words={roles}
               cursor
