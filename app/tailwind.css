@@ -22,4 +22,9 @@
         -moz-osx-font-smoothing: grayscale;
         -webkit-text-size-adjust: 100%;
     }
+
+    ::selection {
+        color: hsl(var(--nextui-background));
+        background: hsl(var(--nextui-primary));
+    }
 }
