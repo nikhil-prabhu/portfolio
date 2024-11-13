@@ -20,10 +20,11 @@ import {
   NavbarMenuToggle,
   NextUIProvider,
 } from "@nextui-org/react";
-import React from "react";
+import React, { useTransition } from "react";
 import Logo from "~/components/logo";
 import { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
 import { Typewriter } from "react-simple-typewriter";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const meta: MetaFunction = () => {
   return [
@@ -150,7 +151,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <AnimatePresence>
+      <motion.div
+        key="content"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{
+          type: "spring",
+          stiffness: 260,
+          damping: 100,
+        }}
+      >
+        <Outlet />
+      </motion.div>
+    </AnimatePresence>
+  );
 }
 
 export function ErrorBoundary() {
