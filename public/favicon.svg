@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="120"
+   height="120"
+   viewBox="0 0 120 120"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1">
+    <path
+       style="font-style:italic;font-weight:800;font-size:50.4095px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Ultra-Bold Italic';stroke-width:4.20079"
+       d="M 1.5840253,85.247789 26.234271,37.862858 h 8.01511 L 9.5991358,85.247789 Z m 47.7882257,0 -10.132309,-47.384931 h 7.611834 l 10.13231,47.384931 z m 14.719614,0 24.650245,-47.384931 h 8.015111 l -4.637674,8.872072 26.212943,12.753604 -1.15942,7.208558 -24.851885,10.535586 1.0586,-7.107739 14.921215,-6.14996 q 1.15942,-0.453685 2.52047,-0.705733 1.36106,-0.302457 2.16761,-0.352866 -0.80655,-0.100819 -2.1172,-0.352867 -1.26024,-0.252047 -2.26843,-0.756142 L 89.195796,52.380794 72.106975,85.247789 Z"
+       id="text1"
+       aria-label="/\/&gt;" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Hack;-inkscape-font-specification:Hack;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ffffff"
+       x="56.944866"
+       y="59.699532"
+       id="text2"><tspan
+         id="tspan2"
+         x="56.944866"
+         y="59.699532" /></text>
+  </g>
+</svg>

@@ -19,6 +19,33 @@ import {
   NextUIProvider,
 } from "@nextui-org/react";
 import React from "react";
+import Logo from "~/components/logo";
+import { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
+
+export const meta: MetaFunction = () => {
+  return [
+    {
+      title: "Nikhil Prabhu - Portfolio",
+    },
+  ];
+};
+
+export const links: LinksFunction = () => {
+  return [
+    {
+      media: "(prefers-color-scheme: light)",
+      rel: "icon",
+      type: "image/svg",
+      href: "/favicon.svg",
+    },
+    {
+      media: "(prefers-color-scheme: dark)",
+      rel: "icon",
+      type: "image/svg",
+      href: "/favicon.svg",
+    },
+  ];
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -55,7 +82,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="light text-foreground">
         <NextUIProvider>
           <Navbar
             onMenuOpenChange={setIsMenuOpen}
@@ -69,7 +96,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               />
 
               <NavbarBrand>
-                <p className="font-bold text-inherit">LOGO</p>
+                <Logo color="black" size={64} />
               </NavbarBrand>
             </NavbarContent>
 
