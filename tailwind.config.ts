@@ -15,5 +15,20 @@ export default {
     },
   },
   darkMode: "class",
-  plugins: [nextui()],
+  plugins: [
+    nextui({
+      themes: {
+        light: {
+          colors: {
+            background: "#e6e6e6",
+            primary: "#007f5f",
+            secondary: "#80b918",
+            success: "#7cb518",
+            warning: "#fbb02d",
+            danger: "#fb6107",
+          },
+        },
+      },
+    }),
+  ],
 } satisfies Config;
