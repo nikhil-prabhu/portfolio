@@ -1,12 +1,4 @@
-import type { MetaFunction } from "@remix-run/cloudflare";
 import { Typewriter } from "react-simple-typewriter";
-
-export const meta: MetaFunction = () => {
-  return [
-    { title: "Nikhil Prabhu - Portfolio" },
-    { name: "description", content: "Welcome to my portfolio" },
-  ];
-};
 
 export default function Index() {
   const roles = ["Developer", "Cloud Engineer", "DevOps Engineer"];

@@ -1,4 +1,5 @@
 import {
+  Link,
   Links,
   Meta,
   Outlet,
@@ -7,9 +8,45 @@ import {
 } from "@remix-run/react";
 
 import "./tailwind.css";
-import { NextUIProvider } from "@nextui-org/react";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+  NextUIProvider,
+} from "@nextui-org/react";
+import React from "react";
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [currentPage, setCurrentPage] = React.useState(0);
+
+  const menuItems = [
+    {
+      name: "Home",
+      href: "/",
+    },
+    {
+      name: "About",
+      href: "/about",
+    },
+    {
+      name: "Experience",
+      href: "/experience",
+    },
+    {
+      name: "Projects",
+      href: "/projects",
+    },
+    {
+      name: "Contact",
+      href: "/contact",
+    },
+  ];
+
   return (
     <html lang="en">
       <head>
@@ -20,7 +57,59 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <NextUIProvider>
+          <Navbar
+            onMenuOpenChange={setIsMenuOpen}
+            isBlurred={false}
+            className="bg-transparent fixed"
+          >
+            <NavbarContent>
+              <NavbarMenuToggle
+                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                className="sm:hidden"
+              />
+
+              <NavbarBrand>
+                <p className="font-bold text-inherit">LOGO</p>
+              </NavbarBrand>
+            </NavbarContent>
+
+            <NavbarContent className="hidden sm:flex gap-4" justify="center">
+              {menuItems.map((item, index) => (
+                <NavbarItem
+                  key={index}
+                  onClick={() => setCurrentPage(index)}
+                  className="font-bold font-mono uppercase"
+                >
+                  <Link
+                    to={item.href}
+                    className={currentPage == index ? "text-primary" : ""}
+                  >
+                    {item.name}
+                  </Link>
+                </NavbarItem>
+              ))}
+            </NavbarContent>
+
+            <NavbarMenu>
+              {menuItems.map((item, index) => (
+                <NavbarMenuItem
+                  key={index}
+                  onClick={() => setCurrentPage(index)}
+                  className="font-bold font-mono uppercase"
+                >
+                  <Link
+                    to={item.href}
+                    className={`w-full ${currentPage == index ? "text-primary" : ""}`}
+                  >
+                    {item.name}
+                  </Link>
+                </NavbarMenuItem>
+              ))}
+            </NavbarMenu>
+          </Navbar>
+
           {children}
+
           <ScrollRestoration />
           <Scripts />
         </NextUIProvider>
