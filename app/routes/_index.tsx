@@ -25,14 +25,14 @@ export default function Index() {
       </AnimatePresence>
 
       <header className="flex flex-col items-center gap-9">
-        <h1 className="font-bold text-6xl">
+        <h1 className="font-bold text-2xl md:text-6xl">
           Hello there! I&apos;m{" "}
           <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Nikhil Prabhu
           </span>
         </h1>
 
-        <h2 className="text-4xl text-foreground-700">
+        <h2 className="text-xl md:text-4xl text-foreground-700">
           I&apos;m a{" "}
           <span className="font-bold font-mono text-primary">
             <Typewriter
