@@ -22,11 +22,11 @@
         -moz-osx-font-smoothing: grayscale;
         -webkit-text-size-adjust: 100%;
         overflow: hidden;
+        @apply bg-background;
     }
 
     ::selection {
-        color: hsl(var(--nextui-background));
-        background: hsl(var(--nextui-primary));
+        @apply text-background bg-primary;
     }
 }
 
