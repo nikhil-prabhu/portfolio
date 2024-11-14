@@ -29,3 +29,11 @@
         background: hsl(var(--nextui-primary));
     }
 }
+
+@layer components {
+    .writing-mode-vertical {
+        writing-mode: vertical-lr;
+        text-orientation: mixed;
+        rotate: 180deg;
+    }
+}

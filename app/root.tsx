@@ -20,10 +20,9 @@ import {
   NavbarMenuToggle,
   NextUIProvider,
 } from "@nextui-org/react";
-import React, { useTransition } from "react";
+import React from "react";
 import Logo from "~/components/logo";
 import { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
-import { Typewriter } from "react-simple-typewriter";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const meta: MetaFunction = () => {
@@ -57,26 +56,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const primaryColor = "#007f5f";
 
   const menuItems = [
-    {
-      name: "Home",
-      href: "/",
-    },
-    {
-      name: "About",
-      href: "/about",
-    },
-    {
-      name: "Experience",
-      href: "/experience",
-    },
-    {
-      name: "Projects",
-      href: "/projects",
-    },
-    {
-      name: "Contact",
-      href: "/contact",
-    },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Experience", href: "/experience" },
+    { name: "Projects", href: "/projects" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
@@ -89,58 +73,76 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className="light text-foreground">
         <NextUIProvider>
-          <Navbar
-            onMenuOpenChange={setIsMenuOpen}
-            isBlurred={false}
-            className="bg-transparent fixed"
-          >
-            <NavbarContent>
-              <NavbarMenuToggle
-                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                className="sm:hidden"
-              />
+          <div className="flex min-h-screen">
+            {/* Desktop Vertical Navbar */}
+            <Navbar
+              onMenuOpenChange={setIsMenuOpen}
+              isBlurred={false}
+              className="hidden sm:flex fixed left-0 h-screen w-24 flex-col justify-between bg-transparent transform-none"
+            >
+              <NavbarContent className="flex-1 flex-col items-center justify-between">
+                <NavbarBrand className="mt-4">
+                  <Logo color={primaryColor} size={64} />
+                </NavbarBrand>
 
-              <NavbarBrand>
-                <Logo color={primaryColor} size={64} />
-              </NavbarBrand>
-            </NavbarContent>
+                <div className="h-full flex flex-col gap-16 mt-12">
+                  {menuItems.map((item, index) => (
+                    <NavbarItem
+                      key={index}
+                      onClick={() => setCurrentPage(index)}
+                      className="font-bold font-mono uppercase writing-mode-vertical"
+                    >
+                      <Link
+                        to={item.href}
+                        className={`transform rotate-90 whitespace-nowrap ${
+                          currentPage == index ? "text-primary" : ""
+                        }`}
+                      >
+                        {item.name}
+                      </Link>
+                    </NavbarItem>
+                  ))}
+                </div>
+              </NavbarContent>
+            </Navbar>
 
-            <NavbarContent className="hidden sm:flex gap-4" justify="center">
-              {menuItems.map((item, index) => (
-                <NavbarItem
-                  key={index}
-                  onClick={() => setCurrentPage(index)}
-                  className="font-bold font-mono uppercase"
-                >
-                  <Link
-                    to={item.href}
-                    className={currentPage == index ? "text-primary" : ""}
+            {/* Mobile Horizontal Navbar */}
+            <Navbar
+              onMenuOpenChange={setIsMenuOpen}
+              isBlurred={false}
+              className="sm:hidden fixed top-0 w-full bg-transparent"
+            >
+              <NavbarContent>
+                <NavbarMenuToggle
+                  aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                  className="sm:hidden"
+                />
+                <NavbarBrand>
+                  <Logo color={primaryColor} size={40} />
+                </NavbarBrand>
+              </NavbarContent>
+
+              <NavbarMenu>
+                {menuItems.map((item, index) => (
+                  <NavbarMenuItem
+                    key={index}
+                    onClick={() => setCurrentPage(index)}
+                    className="font-bold font-mono uppercase"
                   >
-                    {item.name}
-                  </Link>
-                </NavbarItem>
-              ))}
-            </NavbarContent>
+                    <Link
+                      to={item.href}
+                      className={currentPage == index ? "text-primary" : ""}
+                    >
+                      {item.name}
+                    </Link>
+                  </NavbarMenuItem>
+                ))}
+              </NavbarMenu>
+            </Navbar>
 
-            <NavbarMenu>
-              {menuItems.map((item, index) => (
-                <NavbarMenuItem
-                  key={index}
-                  onClick={() => setCurrentPage(index)}
-                  className="font-bold font-mono uppercase"
-                >
-                  <Link
-                    to={item.href}
-                    className={`w-full ${currentPage == index ? "text-primary" : ""}`}
-                  >
-                    {item.name}
-                  </Link>
-                </NavbarMenuItem>
-              ))}
-            </NavbarMenu>
-          </Navbar>
-
-          {children}
+            {/* Main Content */}
+            <main className="flex-1 sm:ml-24 mt-16 sm:mt-0">{children}</main>
+          </div>
 
           <ScrollRestoration />
           <Scripts />
