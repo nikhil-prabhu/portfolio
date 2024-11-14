@@ -56,8 +56,8 @@ export default function WobblingRingSphere(props: WobblingRingSphereProps) {
       const points = [];
       for (let i = 0; i <= segments; i++) {
         const angle = (i / segments) * Math.PI * 2;
-        // Add a wobble effect by slightly altering the radius
-        const wobble = 1 + wobbleIntensity * Math.sin(time * 5 + i * 0.3);
+        // Add a wobble effect with a smoother transition
+        const wobble = 1 + wobbleIntensity * Math.sin(time * 2 + i * 0.3);
         points.push(
           new THREE.Vector3(
             Math.cos(angle) * radius * wobble,
@@ -66,12 +66,22 @@ export default function WobblingRingSphere(props: WobblingRingSphereProps) {
           ),
         );
       }
+
+      // Ensure the first and last points are tightly connected
+      const firstPoint = points[0];
+      const lastPoint = points[segments];
+      points[segments] = new THREE.Vector3(
+        firstPoint.x,
+        lastPoint.y,
+        firstPoint.z,
+      );
+
       return points;
     };
 
     // Create the circular rings
     const rings: { ring: THREE.Line; radius: number }[] = [];
-    const segments = 128;
+    const segments = 64;
     for (let i = 0; i < 15; i++) {
       const radius = 1;
       const points = createCirclePoints(radius, segments, 0, 0.01);
@@ -82,6 +92,7 @@ export default function WobblingRingSphere(props: WobblingRingSphereProps) {
       });
 
       const ring = new THREE.LineLoop(geometry, material);
+      ring.geometry.attributes.position.needsUpdate = true;
       rings.push({ ring, radius });
       ringsGroup.add(ring);
     }
