@@ -109,7 +109,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {/* Mobile Horizontal Navbar */}
             <Navbar
               onMenuOpenChange={setIsMenuOpen}
-              isBlurred={false}
               className="sm:hidden fixed top-0 w-full bg-transparent"
             >
               <NavbarContent>
