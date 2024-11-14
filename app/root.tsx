@@ -24,6 +24,8 @@ import React from "react";
 import Logo from "~/components/logo";
 import { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
 import { motion, AnimatePresence } from "framer-motion";
+import tailwindConfig from "tailwind.config";
+import resolveConfig from "tailwindcss/resolveConfig";
 
 export const meta: MetaFunction = () => {
   return [
@@ -53,7 +55,8 @@ export const links: LinksFunction = () => {
 export function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(0);
-  const primaryColor = "#007f5f";
+  const fullConfig = resolveConfig(tailwindConfig);
+  const primaryColor = fullConfig.theme.colors.primary;
 
   const menuItems = [
     { name: "Home", href: "/" },

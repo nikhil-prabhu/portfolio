@@ -12,23 +12,16 @@ export default {
         sans: ["Inter"],
         mono: ["JetBrains Mono"],
       },
+      colors: {
+        background: "#e6e6e6",
+        primary: "#007f5f",
+        secondary: "#80b918",
+        success: "#7cb518",
+        warning: "#fbb02d",
+        danger: "#fb6107",
+      },
     },
   },
   darkMode: "class",
-  plugins: [
-    nextui({
-      themes: {
-        light: {
-          colors: {
-            background: "#e6e6e6",
-            primary: "#007f5f",
-            secondary: "#80b918",
-            success: "#7cb518",
-            warning: "#fbb02d",
-            danger: "#fb6107",
-          },
-        },
-      },
-    }),
-  ],
+  plugins: [nextui()],
 } satisfies Config;

@@ -1,11 +1,14 @@
 import { Typewriter } from "react-simple-typewriter";
 import WobblingRingSphere from "~/components/sphere";
 import { motion, AnimatePresence } from "framer-motion";
+import tailwindConfig from "tailwind.config";
+import resolveConfig from "tailwindcss/resolveConfig";
 
 export default function Index() {
   const roles = ["Developer", "Cloud Engineer", "DevOps Engineer"];
-  const primaryColor = "#007f5f";
-  const secondaryColor = "#80b918";
+  const fullConfig = resolveConfig(tailwindConfig);
+  const primaryColor = fullConfig.theme.colors.primary;
+  const secondaryColor = fullConfig.theme.colors.secondary;
 
   return (
     <div className="flex h-screen items-center justify-center text-center">
