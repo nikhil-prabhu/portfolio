@@ -45,7 +45,7 @@ export default function App() {
         <div className="relative m-4 h-screen">
             {/* Title */}
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 bg-black text-white">
-            <span className="text-sm font-mono border border-white px-2 py-1">
+            <span className="text-sm border border-white px-2 py-1">
               my-portfolio.1
             </span>
             </div>
