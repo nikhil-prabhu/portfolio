@@ -33,11 +33,116 @@ function Description() {
                 </p>
 
                 <p className="ml-16">
-                    As a FOSS advocate, I actively contribute to open-source projects. If you&#39;d like to collaborate
+                    As a FOSS advocate, I actively contribute to open-source projects. If you&apos;d like to collaborate
                     or
                     chat
                     about all things DevOps and FOSS, feel free to connect and follow me on GitHub!
                 </p>
+            </div>
+        </div>
+    );
+}
+
+function Experience() {
+    return (
+        <div>
+            <h1 className="uppercase font-bold">Experience</h1>
+            <div className="flex flex-col gap-4">
+                <p className="ml-16">
+                    <span className="font-bold">Systems Engineer</span> -at [EGYM AG] -in
+                    [Berlin, Germany 🇩🇪] -from [Jun 2025] -to [Present]
+                </p>
+                <div className="flex flex-col ml-32 gap-4">
+                    {/* TODO */}
+                </div>
+
+                <p className="ml-16">
+                    <span className="font-bold">Developer Associate</span> -at [SAP Labs] -in
+                    [Bangalore, India 🇮🇳] -from [Apr 2022] -to [May 2025]
+                </p>
+                <div className="flex flex-col ml-32 gap-4">
+                    <p>
+                        Designed and implemented cloud infrastructure monitoring agents and automation solutions.
+                    </p>
+
+                    <p>
+                        Developed standard libraries of reusable utilities and APIs to minimize technical debt across
+                        multiple products and cloud platforms (Python/Go).
+                    </p>
+
+                    <p>
+                        Developed a custom validation framework in Python to validate infrastructure health and state
+                        using YAML files.
+                    </p>
+
+                    <p>
+                        Conducted code reviews and assessed peer deliverables to ensure alignment with quality standards
+                        and best practices.
+                    </p>
+
+                    <p>
+                        Facilitated the transition of the team&apos;s products and technology stack from Python to Go.
+                    </p>
+
+                    <p>
+                        Led annual training sessions and provided mentorship to junior engineers to enhance their
+                        technical skills and professional growth.
+                    </p>
+                </div>
+
+                <p className="ml-16">
+                    <span className="font-bold">DevOps Engineer</span> -at [SAP Labs] -in
+                    [Bangalore, India 🇮🇳] -from [Jun 2020] -to [May 2025]
+                </p>
+                <div className="flex flex-col ml-32 gap-4">
+                    <p>
+                        Designed and implemented cloud infrastructure monitoring agents and automation solutions.
+                    </p>
+
+                    <p>
+                        Developed standard libraries of reusable utilities and APIs to minimize technical debt across
+                        multiple products and cloud platforms (Python/Go).
+                    </p>
+
+                    <p>
+                        Developed a custom validation framework in Python to validate infrastructure health and state
+                        using YAML files.
+                    </p>
+
+                    <p>
+                        Conducted code reviews and assessed peer deliverables to ensure alignment with quality standards
+                        and best practices.
+                    </p>
+
+                    <p>
+                        Facilitated the transition of the team&apos;s products and technology stack from Python to Go.
+                    </p>
+
+                    <p>
+                        Led annual training sessions and provided mentorship to junior engineers to enhance their
+                        technical skills and professional growth.
+                    </p>
+                </div>
+
+                <p className="ml-16">
+                    <span className="font-bold">Full Stack Developer</span> -at [SAP Labs] -in
+                    [Bangalore, India 🇮🇳] -from [Aug 2019] -to [May 2020]
+                </p>
+                <div className="flex flex-col ml-32 gap-4">
+                    <p>
+                        Developed automated network access control policy modification and monitoring with Python
+                        scripts.
+                    </p>
+
+                    <p>
+                        Automated the onboarding of new users with robotic process automation.
+                    </p>
+
+                    <p>
+                        Authored technical documentation and internal blogs to showcase developed products and tools,
+                        ensuring knowledge sharing and usability.
+                    </p>
+                </div>
             </div>
         </div>
     );
@@ -48,6 +153,7 @@ export default function Index() {
         <div className="flex flex-col gap-4">
             <Name/>
             <Description/>
+            <Experience/>
         </div>
     );
 }
