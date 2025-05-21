@@ -148,12 +148,39 @@ function Experience() {
     );
 }
 
+function Education() {
+    return (
+        <div>
+            <h1 className="uppercase font-bold">Education</h1>
+            <div className="flex flex-col gap-4">
+                <p className="ml-16">
+                    <span className="font-bold">Master of Technology</span> -at [Birla Institute of Technology and
+                    Science, Pilani] -in
+                    [Pilani, India 🇮🇳] -from [Aug 2019] -to [Jun 2023]
+                </p>
+                <div className="flex flex-col ml-32 gap-4">
+                    Grade: 7.46/10, First Class
+                </div>
+
+                <p className="ml-16">
+                    <span className="font-bold">Bachelor of Computer Applications</span> -at [Bharatiar University] -in
+                    [Coimbatore, India 🇮🇳] -from [Aug 2015] -to [May 2019]
+                </p>
+                <div className="flex flex-col ml-32 gap-4">
+                    Grade: 8/10, First Class with Distinction
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export default function Index() {
     return (
         <div className="flex flex-col gap-4">
             <Name/>
             <Description/>
             <Experience/>
+            <Education/>
         </div>
     );
 }
