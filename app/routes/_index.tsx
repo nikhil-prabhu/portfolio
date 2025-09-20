@@ -4,9 +4,10 @@ import figlet from 'figlet';
 
 interface FigletComponentProps {
   text: string;
+  className?: string;
 }
 
-function Figlet({ text }: FigletComponentProps) {
+function Figlet({ text, className }: FigletComponentProps) {
   const [ascii, setAscii] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -16,14 +17,34 @@ function Figlet({ text }: FigletComponentProps) {
         console.error('Figlet error:', err);
         setAscii(`Error: ${err.message}`);
       } else {
-        setAscii(result || '');
+        // Clean up the result by removing extra whitespace and empty lines
+        const cleanedResult = result
+          ?.split('\n')
+          .filter(line => line.trim().length > 0) // Remove empty lines
+          .map(line => line.trimEnd()) // Remove trailing whitespace from each line
+          .join('\n') || '';
+
+        setAscii(cleanedResult);
       }
       setLoading(false);
     });
   }, [text]);
 
   if (loading) return <pre>Loading...</pre>;
-  return <pre>{ascii}</pre>;
+
+  return (
+    <pre
+      className={className}
+      style={{
+        lineHeight: '1',
+        margin: 0,
+        padding: 0,
+        whiteSpace: 'pre'
+      }}
+    >
+      {ascii}
+    </pre>
+  );
 }
 
 export const meta: MetaFunction = () => {
@@ -35,13 +56,16 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="flex flex-col items-center gap-16">
-        <header className="flex flex-col items-center gap-9">
-          <div className="h-[144px] w-[434px]">
-            <Figlet text="Placeholder" />
-          </div>
+    <div className="flex h-screen items-center justify-center gap-16">
+      <div className="flex flex-col items-center gap-4">
+        <header className="flex flex-col items-center gap-6">
+          <Figlet text="Nikhil" />
+          <Figlet text="Prabhu" />
         </header>
+
+        <div>
+          <p className="italic">⚡️ Welcome to my <span className="text-highlight">Portfolio</span></p>
+        </div>
       </div>
     </div>
   );

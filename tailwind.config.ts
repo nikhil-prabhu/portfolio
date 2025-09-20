@@ -6,15 +6,13 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          "Inter",
-          "ui-sans-serif",
-          "system-ui",
-          "sans-serif",
-          "Apple Color Emoji",
-          "Segoe UI Emoji",
-          "Segoe UI Symbol",
-          "Noto Color Emoji",
+          "JetBrains Mono",
         ],
+      },
+      colors: {
+        background: "#121212",
+        foreground: "#8a8a8d",
+        highlight: "#c161b2",
       },
     },
   },
