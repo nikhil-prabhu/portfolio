@@ -1,10 +1,24 @@
 import { useEffect, useState } from "react";
 import type { MetaFunction } from "@remix-run/cloudflare";
 import figlet from 'figlet';
+import * as cowsay from 'cowsay';
+
+interface CowsayProps {
+  text: string;
+  className?: string;
+}
 
 interface FigletComponentProps {
   text: string;
   className?: string;
+}
+
+function Cowsay({ text, className }: CowsayProps) {
+  const cow = cowsay.say({ text: text });
+
+  return (
+    <pre className={className}>{cow}</pre>
+  );
 }
 
 function Figlet({ text, className }: FigletComponentProps) {
@@ -57,8 +71,9 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <div className="flex h-screen items-center justify-center gap-16">
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-16">
         <header className="flex flex-col items-center gap-6">
+          <Cowsay text="Placeholder" className="text-sm md:text-base lg:text-lg" />
           <Figlet text="Nikhil" />
           <Figlet text="Prabhu" />
         </header>
