@@ -81,7 +81,21 @@ export default function Index() {
         <div>
           <p className="italic text-muted">⚡️ Welcome to my <span className="text-accent-secondary">Portfolio</span></p>
         </div>
+
+        <div className="max-w-3xl text-center text-primary space-y-4 px-4">
+          <p>{resources["about"][0]}</p>
+          <p>{resources["about"][1]}</p>
+          <p>{resources["about"][2]}</p>
+        </div>
       </div>
     </div>
   );
 }
+
+const resources = {
+  "about": {
+    0: "I’m a Systems Engineer with 6 years of experience designing reliable, efficient software and infrastructure solutions. Skilled across AWS, Azure, and GCP, I specialize in building automation and tooling that streamline workflows, enhance observability, and improve developer productivity.",
+    1: "Proficient in Go, Python, Rust, and C, I enjoy tackling complex engineering problems and delivering maintainable, high-quality code. As a strong advocate for open source, I actively contribute to FOSS projects and share knowledge within the community.",
+    2: "Let’s connect if you’d like to collaborate on cloud, DevOps, or open-source initiatives!",
+  }
+};
