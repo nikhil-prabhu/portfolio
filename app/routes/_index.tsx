@@ -70,7 +70,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="flex h-screen items-center justify-center gap-16">
+    <div className="flex flex-col lg:flex-row h-screen items-center justify-center gap-16">
       <div className="flex flex-col items-center gap-16">
         <header className="flex flex-col items-center gap-6">
           <Cowsay text="Placeholder" className="text-sm md:text-base lg:text-lg text-muted" />
