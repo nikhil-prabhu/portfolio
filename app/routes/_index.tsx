@@ -73,13 +73,13 @@ export default function Index() {
     <div className="flex h-screen items-center justify-center gap-16">
       <div className="flex flex-col items-center gap-16">
         <header className="flex flex-col items-center gap-6">
-          <Cowsay text="Placeholder" className="text-sm md:text-base lg:text-lg" />
-          <Figlet text="Nikhil" />
-          <Figlet text="Prabhu" />
+          <Cowsay text="Placeholder" className="text-sm md:text-base lg:text-lg text-muted" />
+          <Figlet text="Nikhil" className="text-muted" />
+          <Figlet text="Prabhu" className="text-muted" />
         </header>
 
         <div>
-          <p className="italic">⚡️ Welcome to my <span className="text-highlight">Portfolio</span></p>
+          <p className="italic text-muted">⚡️ Welcome to my <span className="text-accent-secondary">Portfolio</span></p>
         </div>
       </div>
     </div>
