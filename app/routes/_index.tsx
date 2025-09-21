@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { MetaFunction } from "@remix-run/cloudflare";
 import figlet from 'figlet';
+import { fortune } from "@nikhil-prabhu/fortune";
 import * as cowsay from 'cowsay';
 
 interface CowsayProps {
@@ -73,7 +74,7 @@ export default function Index() {
     <div className="flex flex-col lg:flex-row h-screen items-center justify-center gap-16">
       <div className="flex flex-col items-center gap-16">
         <header className="flex flex-col items-center gap-6">
-          <Cowsay text="Placeholder" className="text-sm md:text-base lg:text-lg text-muted" />
+          <Cowsay text={fortune()} className="text-sm md:text-base lg:text-lg text-muted" />
           <Figlet text="Nikhil" className="text-muted" />
           <Figlet text="Prabhu" className="text-muted" />
         </header>
