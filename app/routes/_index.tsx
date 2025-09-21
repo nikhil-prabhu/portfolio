@@ -18,6 +18,7 @@ function Cowsay({ text, className }: CowsayProps) {
   const cow = cowsay.say({ text: text });
 
   return (
+    // FIXME: don't break words onto multiple lines
     <pre className={className}>{cow}</pre>
   );
 }
