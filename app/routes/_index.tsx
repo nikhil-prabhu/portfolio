@@ -144,6 +144,30 @@ export default function Index() {
             <span>🇮🇳</span>
           </div>
         </div>
+
+        <h1 className="text-accent-warning">Education</h1>
+
+        <div className="flex flex-row justify-between gap-2 w-full">
+          <h2 className="text-accent-primary">MTech (Software Engineering)</h2>
+          <h2 className="text-accent-secondary">BITS, Pilani</h2>
+          <h2 className="text-muted">2019 - 2023</h2>
+          {/* TODO: make label container sides angled */}
+          <div className="flex flex-row gap-4 items-center bg-secondary pl-4 pr-4">
+            <p>Bengaluru, IN</p>
+            <span>🇮🇳</span>
+          </div>
+        </div>
+
+        <div className="flex flex-row justify-between gap-2 w-full">
+          <h2 className="text-accent-primary">BCA (Computer Applications)</h2>
+          <h2 className="text-accent-secondary">SKASC, CBE</h2>
+          <h2 className="text-muted">2016 - 2019</h2>
+          {/* TODO: make label container sides angled */}
+          <div className="flex flex-row gap-4 items-center bg-secondary pl-4 pr-4">
+            <p>Coimbatore, IN</p>
+            <span>🇮🇳</span>
+          </div>
+        </div>
       </div>
     </div>
   );
