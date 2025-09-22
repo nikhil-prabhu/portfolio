@@ -5,9 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: [
-          "JetBrains Mono",
-        ],
+        sans: ["JetBrains Mono"],
       },
       // Colors taken from the themery.nvim palette: https://github.com/tahayvr/themery.nvim/blob/e5005cf2f2fbf18749e4f54e99bff56a3e1c11e1/lua/themery/colors.lua#L3
       colors: {
@@ -71,21 +69,21 @@ export default {
 
       // Semantic color mappings for common use cases
       backgroundColor: {
-        'primary': '#121212',        // bg1
-        'secondary': '#333333',      // bg2
-        'elevated': '#212121',       // bg3
-        'backdrop': '#0D0D0D',       // bg0
+        primary: "#121212", // bg1
+        secondary: "#333333", // bg2
+        elevated: "#212121", // bg3
+        backdrop: "#0D0D0D", // bg0
       },
 
       textColor: {
-        'primary': '#EAEAEA',        // fg1
-        'secondary': '#BEBEBE',      // fg2
-        'muted': '#8A8A8D',         // fg3
-        'emphasis': '#FFFFFF',       // fg0
+        primary: "#EAEAEA", // fg1
+        secondary: "#BEBEBE", // fg2
+        muted: "#8A8A8D", // fg3
+        emphasis: "#FFFFFF", // fg0
       },
 
       borderColor: {
-        'default': '#5C6370',        // uic1
+        default: "#5C6370", // uic1
       },
     },
   },
