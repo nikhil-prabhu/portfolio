@@ -126,7 +126,7 @@ function ExperienceEntry(props: ExperienceEntryProps) {
       <h1 className="text-xl font-bold text-gray-800 dark:text-gray-100">{props.company}</h1>
 
       <div className="flex flex-row gap-4">
-        <div className={`border-l-2 border-quarternary-neutral ${props.roles.length > 1 ? '' : 'hidden'}`} />
+        <div className={`border-l-2 border-gray-400 dark:border-gray-600 ${props.roles.length > 1 ? '' : 'hidden'}`} />
 
         <div className="flex flex-col gap-8 w-full">
           {props.roles.map((role, index) => (
