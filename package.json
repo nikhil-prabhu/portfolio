@@ -20,7 +20,8 @@
     "@remix-run/react": "^2.17.4",
     "isbot": "^4.4.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.6.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260301.1",

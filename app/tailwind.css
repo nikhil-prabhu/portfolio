@@ -39,3 +39,17 @@ body {
     color-scheme: dark;
   }
 }
+
+a {
+  @apply font-mono underline underline-dotted;
+  text-decoration-thickness: 1px;
+  text-decoration-color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@layer utilities {
+  .underline-dotted {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+  }
+}
