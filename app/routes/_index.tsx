@@ -2,12 +2,16 @@ import type { MetaFunction } from "@remix-run/cloudflare";
 import Profile from "/profile.png";
 import BongoCat from "/bongocat.gif";
 import { HiExternalLink, HiMail } from "react-icons/hi";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaAws, FaGitAlt, FaGithub, FaLinkedin, FaPython, FaRust } from "react-icons/fa";
 import { IconType } from "react-icons";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { TiStarOutline } from "react-icons/ti";
 import { BiGitRepoForked } from "react-icons/bi";
+import { FaGolang } from "react-icons/fa6";
+import { VscAzure } from "react-icons/vsc";
+import { SiAnsible, SiCplusplus, SiDocker, SiGooglecloud, SiKubernetes, SiTerraform, SiTypescript } from "react-icons/si";
+import { DiJava } from "react-icons/di";
 
 export const meta: MetaFunction = () => {
   return [
@@ -177,6 +181,15 @@ function ProjectCard(props: ProjectCardProps) {
   );
 }
 
+function SkillCard(props: { skill: string, icon: IconType, color: string }) {
+  return (
+    <div className="flex gap-2 items-center px-3 py-1 border-2 border-black dark:border-white font-mono">
+      <props.icon style={{ color: props.color }} />
+      {props.skill}
+    </div>
+  );
+}
+
 function Header() {
   return (
     <div className="flex flex-col gap-8 w-full">
@@ -212,6 +225,32 @@ function About() {
     <div>
       <p>{resources.about}</p>
     </div>
+  );
+}
+
+function Skills() {
+  return (
+    <Section title="Skills">
+      <div className="flex flex-wrap items-center gap-4">
+        <SkillCard skill="Go" icon={FaGolang} color="#00ADD8" />
+        <SkillCard skill="Rust" icon={FaRust} color="#dea584" />
+        <SkillCard skill="Python" icon={FaPython} color="#3572A5" />
+        <SkillCard skill="AWS" icon={FaAws} color="#FF9900" />
+        <SkillCard skill="Azure" icon={VscAzure} color="#007FFF" />
+        <SkillCard skill="GCP" icon={SiGooglecloud} color="#4285F4" />
+        <SkillCard skill="Terraform" icon={SiTerraform} color="#623CE4" />
+        <SkillCard skill="Kubernetes" icon={SiKubernetes} color="#326CE5" />
+        <SkillCard skill="Docker" icon={SiDocker} color="#2496ED" />
+        <SkillCard skill="Ansible" icon={SiAnsible} color="#000000" />
+        <SkillCard skill="Git" icon={FaGitAlt} color="#F05032" />
+        <SkillCard skill="GitHub" icon={FaGithub} color="#000000" />
+        <SkillCard skill="TypeScript" icon={SiTypescript} color="#3178C6" />
+        <SkillCard skill="Java" icon={DiJava} color="#007396" />
+        <SkillCard skill="C/C++" icon={SiCplusplus} color="#00599C" />
+
+        <span className="font-mono">...and more!</span>
+      </div>
+    </Section>
   );
 }
 
@@ -282,6 +321,7 @@ export default function Index() {
         <div className="flex flex-col items-center gap-8 w-full">
           <Header />
           <About />
+          <Skills />
           <Experience />
           <Education />
           <Projects />
