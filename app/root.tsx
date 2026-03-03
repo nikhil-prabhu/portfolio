@@ -9,6 +9,16 @@ import {
 import "./tailwind.css";
 
 import bg from "/bg-v1.mp4";
+import faviconGif from "/favicon.gif";
+import { LinksFunction } from "@remix-run/cloudflare";
+
+export const links: LinksFunction = () => [
+    {
+        rel: "icon",
+        href: faviconGif,
+        type: "image/gif",
+    },
+]
 
 export function Layout({ children }: { children: React.ReactNode }) {
     return (
