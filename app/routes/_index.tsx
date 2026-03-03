@@ -17,12 +17,79 @@ type ContactInfoProps = {
   url: string;
 };
 
+type SectionProps = {
+  title: string;
+  children: React.ReactNode;
+}
+
+type ExperienceEntryProps = {
+  company: string;
+  roles: RoleInfo[];
+};
+
+type RoleInfo = {
+  title: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  items: string[];
+}
+
 function ContactInfo({ icon: Icon, display, url }: ContactInfoProps) {
   return (
     <a href={url} className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
       <Icon className="w-5 h-5" />
       <span className="font-mono">{display}</span>
     </a>
+  );
+}
+
+function Section(props: SectionProps) {
+  return (
+    <div className="flex flex-col gap-4 w-full">
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+        {props.title}
+      </h2>
+
+      <hr className="h-px bg-neutral-quaternary border-1 border-black w-full" />
+
+      <div className="flex flex-col gap-4 w-full">
+        {props.children}
+      </div>
+    </div>
+  );
+}
+
+function ExperienceEntry(props: ExperienceEntryProps) {
+  return (
+    <div className="flex flex-col gap-4">
+      <h1 className="text-xl font-bold text-gray-800 dark:text-gray-100">{props.company}</h1>
+
+      <div className="flex flex-row gap-4">
+        <div className={`border-l-2 border-quarternary-neutral ${props.roles.length > 1 ? '' : 'hidden'}`} />
+
+        <div className="flex flex-col gap-8 w-full">
+          {props.roles.map((role, index) => (
+            <div key={index} className="flex flex-col gap-1">
+              <div className="flex flex-col md:flex-row items-start md:items-center md:justify-between w-full mb-2">
+                <h2 className="text-lg italic">
+                  {role.title}
+                </h2>
+                <div className="text-sm">
+                  {role.startDate} - {role.endDate} | {role.location}
+                </div>
+              </div>
+
+              <ul className="list-disc ml-8">
+                {role.items.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div >
   );
 }
 
@@ -50,6 +117,8 @@ function Header() {
         <ContactInfo icon={FaLinkedin} display={resources.linkedin.id} url={resources.linkedin.url} />
         <ContactInfo icon={FaGithub} display={resources.github.id} url={resources.github.url} />
       </div>
+
+      <hr className="h-px bg-neutral-quaternary border-1 border-black w-full" />
     </div>
   );
 }
@@ -62,14 +131,23 @@ function About() {
   );
 }
 
+function Experience() {
+  return (
+    <Section title="Professional Experience">
+      {resources.experience.map((entry, index) => (
+        <ExperienceEntry key={index} company={entry.company} roles={entry.roles} />
+      ))}
+    </Section>
+  );
+}
+
 export default function Index() {
   return (
     <div className="flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-900 border-4 border-black dark:border-gray-700 w-full sm:w-full md:w-[80%] lg:w-[60%] xl:w-[50%] my-0 md:my-12 mx-auto">
-      <div className="flex flex-col items-center gap-16 w-full">
+      <div className="flex flex-col items-center gap-8 w-full">
         <Header />
-        <hr className="h-px bg-neutral-quaternary border-1 w-full" />
-
         <About />
+        <Experience />
       </div>
     </div>
   );
@@ -89,4 +167,52 @@ const resources = {
     id: "nikhil-prabhu",
     url: "https://github.com/nikhil-prabhu",
   },
+  experience: [
+    {
+      company: "EGYM AG",
+      roles: [
+        {
+          title: "Systems Engineer",
+          location: "Berlin, Germany",
+          startDate: "Jun 2025",
+          endDate: "Nov 2025",
+          items: [
+            "Built Rust and Go-based internal tooling to improve cloud observability workflows across Kubernetes workloads.",
+            "Automated operational processes reducing manual intervention and accelerating developer workflows.",
+            "Partnered with product engineering teams to improve performance and reliability of production services.",
+          ],
+        },
+      ],
+    },
+    {
+      company: "SAP Labs",
+      roles: [
+        {
+          title: "Developer / DevOps Engineer",
+          location: "Bangalore, India",
+          startDate: "Jun 2020",
+          endDate: "May 2025",
+          items: [
+            "Designed and automated cloud infrastructure monitoring solutions and reusable tooling (Python/ Go).",
+            "Developed Go-based system services to automate security and compliance enforcement across distributed cloud environments.",
+            "Built a custom validation framework to assess infrastructure health and state.",
+            "Created shared utility libraries/ APIs/ SDKs to reduce technical debt across platforms.",
+            "Performed code reviews to ensure code quality and best-practice adherence.",
+            "Mentored junior engineers and conducted annual technical training sessions to improve team-wide Go adoption and engineering practices.",
+            "Drove team migration from Python to Go.",
+          ],
+        },
+        {
+          title: "Fullstack Developer",
+          location: "Bangalore, India",
+          startDate: "Aug 2019",
+          endDate: "May 2020",
+          items: [
+            "Automated network access control policy changes and monitoring using Python.",
+            "Built robotic process automation workflows to streamline user onboarding.",
+          ],
+        },
+      ],
+    },
+  ]
 };
