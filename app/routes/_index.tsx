@@ -1,5 +1,6 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
 import Profile from "/profile.png";
+import BongoCat from "/bongocat.gif";
 import { HiExternalLink, HiMail } from "react-icons/hi";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { IconType } from "react-icons";
@@ -195,7 +196,7 @@ function Header() {
         </div>
       </header>
 
-      <div className="flex flex-wrap gap-8">
+      <div className="flex flex-wrap gap-8 mb-24 md:mb-0">
         <ContactInfo icon={HiMail} display={resources.email.id} url={resources.email.url} />
         <ContactInfo icon={FaLinkedin} display={resources.linkedin.id} url={resources.linkedin.url} />
         <ContactInfo icon={FaGithub} display={resources.github.id} url={resources.github.url} />
@@ -269,13 +270,22 @@ function Projects() {
 
 export default function Index() {
   return (
-    <div className="flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-900 border-4 border-black dark:border-white w-full sm:w-full md:w-[80%] lg:w-[60%] xl:w-[50%] my-0 md:my-12 mx-auto">
-      <div className="flex flex-col items-center gap-8 w-full">
-        <Header />
-        <About />
-        <Experience />
-        <Education />
-        <Projects />
+    <div className="relative">
+      <div className="absolute top-[616px] md:top-[-88px] right-1/4 transform -translate-x-1/2">
+        <img
+          src={BongoCat}
+          alt="BongoCat"
+          className="w-32 h-auto"
+        />
+      </div>
+      <div className="flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-900 border-4 border-black dark:border-gray-700 w-full sm:w-full md:w-[80%] lg:w-[60%] xl:w-[50%] my-0 md:my-24 mx-auto">
+        <div className="flex flex-col items-center gap-8 w-full">
+          <Header />
+          <About />
+          <Experience />
+          <Education />
+          <Projects />
+        </div>
       </div>
     </div>
   );
