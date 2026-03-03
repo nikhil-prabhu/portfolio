@@ -84,8 +84,9 @@ async function fetchPinnedRepositories(username: string) {
 function ContactInfo({ icon: Icon, display, url }: ContactInfoProps) {
   return (
     <a href={url} className="flex items-center gap-2">
-      <Icon className="w-5 h-5" />
+      <Icon />
       <span className="font-mono">{display}</span>
+      <HiExternalLink />
     </a>
   );
 }
@@ -174,7 +175,7 @@ function Header() {
         </div>
       </header>
 
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-8">
         <ContactInfo icon={HiMail} display={resources.email.id} url={resources.email.url} />
         <ContactInfo icon={FaLinkedin} display={resources.linkedin.id} url={resources.linkedin.url} />
         <ContactInfo icon={FaGithub} display={resources.github.id} url={resources.github.url} />
