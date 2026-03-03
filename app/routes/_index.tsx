@@ -397,14 +397,14 @@ const resources = {
     {
       institution: "Birla Institute of Technology and Science, Pilani",
       location: "Pilani, India",
-      degree: "MTech (Software Engineering)",
+      degree: "Master's - MTech (Software Engineering)",
       startDate: "Aug 2019",
       endDate: "Jun 2023",
     },
     {
       institution: "Bharatiar University",
       location: "Coimbatore, India",
-      degree: "BCA (Computer Applications)",
+      degree: "Bachelor's - BCA (Computer Applications)",
       startDate: "Jun 2016",
       endDate: "May 2019",
     }
