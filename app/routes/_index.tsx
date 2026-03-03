@@ -96,7 +96,7 @@ async function fetchPinnedRepositories(username: string) {
 
 function ContactInfo({ icon: Icon, display, url }: ContactInfoProps) {
   return (
-    <a href={url} className="flex items-center gap-2">
+    <a href={url} target="_blank" className="flex items-center gap-2">
       <Icon />
       <span className="font-mono">{display}</span>
       <HiExternalLink />
