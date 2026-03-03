@@ -11,7 +11,7 @@ export const meta: MetaFunction = () => {
 function Header() {
   return (
     <div className="w-full">
-      <header className="flex items-center justify-between w-full gap-8">
+      <header className="flex flex-col md:flex-row items-center justify-between w-full gap-8">
         <div className="flex flex-col items-start gap-4 text-left w-full">
           <h1 className="text-6xl text-gray-800 dark:text-gray-100">
             Nikhil <span className="font-bold">Prabhu</span>
