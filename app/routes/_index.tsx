@@ -43,7 +43,7 @@ export default function Index() {
     <div className="flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-900 border-4 border-black dark:border-gray-700 w-full sm:w-full md:w-[80%] lg:w-[60%] xl:w-[50%] my-0 md:my-12 mx-auto">
       <div className="flex flex-col items-center gap-16 w-full">
         <Header />
-        <hr className="h-px bg-neutral-quaternary border-0" />
+        <hr className="h-px bg-neutral-quaternary border-1 w-full" />
 
         <About />
       </div>
