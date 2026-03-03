@@ -1,14 +1,27 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
 import Profile from "/profile.png";
-import { HiMail } from "react-icons/hi";
+import { HiExternalLink, HiMail } from "react-icons/hi";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { IconType } from "react-icons";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { TiStarOutline } from "react-icons/ti";
+import { BiGitRepoForked } from "react-icons/bi";
 
 export const meta: MetaFunction = () => {
   return [
     { title: "Nikhil Prabhu - Portfolio" },
     { name: "description", content: "Welcome to my portfolio!" },
   ];
+};
+
+type Repository = {
+  name: string;
+  description: string;
+  language: string;
+  languageColor: string;
+  stars: number;
+  forks: number;
 };
 
 type ContactInfoProps = {
@@ -35,9 +48,42 @@ type RoleInfo = {
   items: string[];
 }
 
+type ProjectCardProps = {
+  title: string;
+  description: string;
+  url: string;
+  language: string;
+  languageColor: string;
+  stars: number;
+  forks: number;
+}
+
+async function fetchPinnedRepositories(username: string) {
+  const GITHUB_API_URL = `https://pinned.berrysauce.dev/get/${username}`;
+
+  try {
+    const response = await axios.get(GITHUB_API_URL);
+
+    const repos: Repository[] = response.data.map((repo: any) => ({
+      name: repo.name,
+      description: repo.description,
+      url: `https://github.com/${username}/${repo.name}`,
+      language: repo.language,
+      languageColor: repo.languageColor,
+      stars: repo.stars,
+      forks: repo.forks,
+    }));
+
+    return repos;
+  } catch (error) {
+    console.error("Error fetching repositories:", error);
+    return [];
+  }
+}
+
 function ContactInfo({ icon: Icon, display, url }: ContactInfoProps) {
   return (
-    <a href={url} className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+    <a href={url} className="flex items-center gap-2">
       <Icon className="w-5 h-5" />
       <span className="font-mono">{display}</span>
     </a>
@@ -93,6 +139,22 @@ function ExperienceEntry(props: ExperienceEntryProps) {
   );
 }
 
+function ProjectCard(props: ProjectCardProps) {
+  return (
+    <div className={`block p-4 border-2 border-black font-mono w-full`}>
+      <a href={props.url} target="_blank" className="flex items-center gap-2 text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">{props.title} <HiExternalLink /></a>
+      <p className="text-gray-700 dark:text-gray-300">{props.description}</p>
+
+      <div className="flex items-center gap-2 mt-2 relative bottom-0 left-0">
+        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: props.languageColor }} />
+        <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">{props.language}</span>
+        <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"><TiStarOutline /> {props.stars}</span>
+        <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"><BiGitRepoForked /> {props.forks}</span>
+      </div>
+    </div >
+  );
+}
+
 function Header() {
   return (
     <div className="flex flex-col gap-8 w-full">
@@ -141,6 +203,39 @@ function Experience() {
   );
 }
 
+function Projects() {
+  const username = resources.github.id;
+  const [pinnedRepos, setPinnedRepos] = useState<Repository[]>([]);
+
+  useEffect(() => {
+    async function getPinnedRepos() {
+      const repos = await fetchPinnedRepositories(username);
+      setPinnedRepos(repos);
+    }
+
+    getPinnedRepos();
+  }, []);
+
+  return (
+    <Section title="Projects">
+      <div className="grid auto-rows-fr grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 w-full">
+        {pinnedRepos.map((repo, index) => (
+          <ProjectCard
+            key={index}
+            title={repo.name}
+            description={repo.description || "No description provided."}
+            url={`https://github.com/${username}/${repo.name}`}
+            language={repo.language}
+            languageColor={repo.languageColor}
+            stars={repo.stars}
+            forks={repo.forks}
+          />
+        ))}
+      </div>
+    </Section>
+  );
+}
+
 export default function Index() {
   return (
     <div className="flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-900 border-4 border-black dark:border-gray-700 w-full sm:w-full md:w-[80%] lg:w-[60%] xl:w-[50%] my-0 md:my-12 mx-auto">
@@ -148,6 +243,7 @@ export default function Index() {
         <Header />
         <About />
         <Experience />
+        <Projects />
       </div>
     </div>
   );
