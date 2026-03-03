@@ -371,10 +371,10 @@ const resources = {
           startDate: "Jun 2020",
           endDate: "May 2025",
           items: [
-            "Designed and automated cloud infrastructure monitoring solutions and reusable tooling (Python/ Go).",
+            "Designed and automated cloud infrastructure monitoring solutions and reusable tooling (Python/Go).",
             "Developed Go-based system services to automate security and compliance enforcement across distributed cloud environments.",
             "Built a custom validation framework to assess infrastructure health and state.",
-            "Created shared utility libraries/ APIs/ SDKs to reduce technical debt across platforms.",
+            "Created shared utility libraries/APIs/SDKs to reduce technical debt across platforms.",
             "Performed code reviews to ensure code quality and best-practice adherence.",
             "Mentored junior engineers and conducted annual technical training sessions to improve team-wide Go adoption and engineering practices.",
             "Drove team migration from Python to Go.",
