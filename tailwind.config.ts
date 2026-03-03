@@ -15,6 +15,12 @@ export default {
           "Segoe UI Symbol",
           "Noto Color Emoji",
         ],
+        serif: [
+          "EBGaramond",
+          "ui-serif",
+          "Georgia",
+          "serif",
+        ],
       },
     },
   },
