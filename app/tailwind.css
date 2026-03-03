@@ -30,6 +30,10 @@
   font-weight: 400;
 }
 
+::selection {
+  @apply bg-black dark:bg-white text-white dark:text-black;
+}
+
 html,
 body {
   @apply bg-gray-300 dark:bg-gray-950;
