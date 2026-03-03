@@ -31,12 +31,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
     return (
         <div className="relative min-h-screen w-full">
+            {/* Fallback background for when video background is not available */}
+            <div className="fixed inset-0 -z-20 h-full bg-gray-300 dark:bg-gray-950" />
+
             <video
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="fixed inset-0 -z-10 h-full w-full object-cover"
+                className="fixed inset-0 -z-10 h-full w-full object-cover hidden motion-safe:!block"
             >
                 <source src={bg} type="video/mp4" />
             </video>
