@@ -106,7 +106,7 @@ function Section(props: SectionProps) {
         {props.title}
       </h2>
 
-      <hr className="h-px bg-neutral-quaternary border-1 border-black w-full" />
+      <hr className="h-px bg-neutral-quaternary border-1 border-black dark:border-white w-full" />
 
       <div className="flex flex-col gap-4 w-full">
         {props.children}
@@ -162,7 +162,7 @@ function EducationEntry(props: EducationEntryProps) {
 
 function ProjectCard(props: ProjectCardProps) {
   return (
-    <div className={`block p-4 border-2 border-black font-mono w-full`}>
+    <div className={`block p-4 border-2 border-black dark:border-white font-mono w-full`}>
       <a href={props.url} target="_blank" className="flex items-center gap-2 text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">{props.title} <HiExternalLink /></a>
       <p className="text-gray-700 dark:text-gray-300">{props.description}</p>
 
@@ -201,7 +201,7 @@ function Header() {
         <ContactInfo icon={FaGithub} display={resources.github.id} url={resources.github.url} />
       </div>
 
-      <hr className="h-px bg-neutral-quaternary border-1 border-black w-full" />
+      <hr className="h-px bg-neutral-quaternary border-1 border-black dark:border-white w-full" />
     </div>
   );
 }
@@ -269,7 +269,7 @@ function Projects() {
 
 export default function Index() {
   return (
-    <div className="flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-900 border-4 border-black dark:border-gray-700 w-full sm:w-full md:w-[80%] lg:w-[60%] xl:w-[50%] my-0 md:my-12 mx-auto">
+    <div className="flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-900 border-4 border-black dark:border-white w-full sm:w-full md:w-[80%] lg:w-[60%] xl:w-[50%] my-0 md:my-12 mx-auto">
       <div className="flex flex-col items-center gap-8 w-full">
         <Header />
         <About />
