@@ -309,7 +309,7 @@ function Projects() {
 
 export default function Index() {
   return (
-    <div className="relative">
+    <div className="relative z-30">
       <div className="absolute top-[-99px] right-1 md:right-1/4 transform -translate-x-1/2">
         <img
           src={BongoCat}

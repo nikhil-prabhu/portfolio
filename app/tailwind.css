@@ -36,7 +36,6 @@
 
 html,
 body {
-  @apply bg-gray-300 dark:bg-gray-950;
   @apply text-lg;
   font-family: "EBGaramond", serif;
 
