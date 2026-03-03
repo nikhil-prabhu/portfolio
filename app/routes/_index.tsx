@@ -40,6 +40,14 @@ type ExperienceEntryProps = {
   roles: RoleInfo[];
 };
 
+type EducationEntryProps = {
+  institution: string;
+  location: string;
+  degree: string;
+  startDate: string;
+  endDate: string;
+};
+
 type RoleInfo = {
   title: string;
   location: string;
@@ -140,6 +148,18 @@ function ExperienceEntry(props: ExperienceEntryProps) {
   );
 }
 
+function EducationEntry(props: EducationEntryProps) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex flex-col md:flex-row items-start md:items-center md:justify-between w-full mb-2">
+        <h1 className="text-xl font-bold text-gray-800 dark:text-gray-100">{props.institution}</h1>
+        <div className="text-sm">{props.startDate} - {props.endDate} | {props.location}</div>
+      </div>
+      <div className="text-lg italic">{props.degree}</div>
+    </div >
+  );
+}
+
 function ProjectCard(props: ProjectCardProps) {
   return (
     <div className={`block p-4 border-2 border-black font-mono w-full`}>
@@ -204,6 +224,16 @@ function Experience() {
   );
 }
 
+function Education() {
+  return (
+    <Section title="Education">
+      {resources.education.map((entry, index) => (
+        <EducationEntry key={index} institution={entry.institution} location={entry.location} degree={entry.degree} startDate={entry.startDate} endDate={entry.endDate} />
+      ))}
+    </Section>
+  );
+}
+
 function Projects() {
   const username = resources.github.id;
   const [pinnedRepos, setPinnedRepos] = useState<Repository[]>([]);
@@ -244,6 +274,7 @@ export default function Index() {
         <Header />
         <About />
         <Experience />
+        <Education />
         <Projects />
       </div>
     </div>
@@ -311,5 +342,21 @@ const resources = {
         },
       ],
     },
-  ]
+  ],
+  education: [
+    {
+      institution: "Birla Institute of Technology and Science, Pilani",
+      location: "Pilani, India",
+      degree: "MTech (Software Engineering)",
+      startDate: "Aug 2019",
+      endDate: "Jun 2023",
+    },
+    {
+      institution: "Bharatiar University",
+      location: "Coimbatore, India",
+      degree: "BCA (Computer Applications)",
+      startDate: "Jun 2016",
+      endDate: "May 2019",
+    }
+  ],
 };
