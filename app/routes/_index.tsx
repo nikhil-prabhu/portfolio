@@ -314,7 +314,7 @@ export default function Index() {
         <img
           src={BongoCat}
           alt="BongoCat"
-          className="w-32 h-auto"
+          className="w-32 h-auto hidden motion-safe:!block"
         />
       </div>
       <div className="flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-900 border-4 border-black dark:border-gray-700 w-full sm:w-full md:w-[80%] lg:w-[60%] xl:w-[50%] my-24 mx-auto">
