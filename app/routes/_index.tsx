@@ -174,8 +174,8 @@ function ProjectCard(props: ProjectCardProps) {
       <div className="flex items-center gap-2 mt-2 relative bottom-0 left-0">
         <div className="w-3 h-3 rounded-full" style={{ backgroundColor: props.languageColor }} />
         <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">{props.language}</span>
-        <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"><TiStarOutline /> {props.stars}</span>
-        <span className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"><BiGitRepoForked /> {props.forks}</span>
+        <a href={`${props.url}/stargazers`} target="_blank" className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"><TiStarOutline /> {props.stars}</a>
+        <a href={`${props.url}/forks`} target="_blank" className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"><BiGitRepoForked /> {props.forks}</a>
       </div>
     </div >
   );
