@@ -3,29 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "EBGaramond";
-  src: url("/fonts/EBGaramond-VariableFont_wght.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: "EBGaramond";
-  src: url("/fonts/EBGaramond-VariableFont_wght.ttf") format("truetype");
-  font-style: bold;
-  font-weight: 700;
-}
-
-@font-face {
-  font-family: "EBGaramond";
-  src: url("/fonts/EBGaramond-Italic-VariableFont_wght.ttf") format("truetype");
-  font-style: italic;
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  src: url("/public/fonts/JetBrainsMono-VariableFont_wght.ttf") format("truetype");
+  font-family: "m6x11plus";
+  src: url("/public/fonts/m6x11plus.ttf") format("truetype");
   font-style: monospace;
   font-weight: 400;
 }
@@ -37,7 +16,7 @@
 html,
 body {
   @apply text-lg;
-  font-family: "EBGaramond", serif;
+  font-family: "m6x11plus", monospace;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
