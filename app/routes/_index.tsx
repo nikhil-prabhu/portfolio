@@ -1,15 +1,6 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
-import { HiExternalLink, HiMail } from "react-icons/hi";
-import { FaAws, FaGitAlt, FaGithub, FaLinkedin, FaPython, FaRust } from "react-icons/fa";
-import { IconType } from "react-icons";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { TiStarOutline } from "react-icons/ti";
-import { BiGitRepoForked } from "react-icons/bi";
-import { FaGolang } from "react-icons/fa6";
-import { VscAzure } from "react-icons/vsc";
-import { SiAnsible, SiCplusplus, SiDocker, SiGooglecloud, SiKubernetes, SiTerraform, SiTypescript } from "react-icons/si";
-import { DiJava } from "react-icons/di";
+
 
 export const meta: MetaFunction = () => {
   return [
@@ -26,48 +17,6 @@ type Repository = {
   stars: number;
   forks: number;
 };
-
-type ContactInfoProps = {
-  icon: IconType;
-  display: string;
-  url: string;
-};
-
-type SectionProps = {
-  title: string;
-  children: React.ReactNode;
-}
-
-type ExperienceEntryProps = {
-  company: string;
-  roles: RoleInfo[];
-};
-
-type EducationEntryProps = {
-  institution: string;
-  location: string;
-  degree: string;
-  startDate: string;
-  endDate: string;
-};
-
-type RoleInfo = {
-  title: string;
-  location: string;
-  startDate: string;
-  endDate: string;
-  items: string[];
-}
-
-type ProjectCardProps = {
-  title: string;
-  description: string;
-  url: string;
-  language: string;
-  languageColor: string;
-  stars: number;
-  forks: number;
-}
 
 async function fetchPinnedRepositories(username: string) {
   const GITHUB_API_URL = `https://pinned.berrysauce.dev/get/${username}`;
@@ -94,8 +43,26 @@ async function fetchPinnedRepositories(username: string) {
 
 export default function Index() {
   return (
-    <div className="flex flex-col items-center w-full">
-      {/* Placeholder */}
+    <div className="flex flex-col items-center justify-center w-full h-full">
+      <h1 className="text-8xl">Welcome to my Portfolio!</h1>
+
+      <div className="flex flex-row items-center justify-center gap-4 mt-8 bg-[#38464C] rounded-xl border-b-4 border-[#131A1C] p-4">
+        <button className="bg-[#0F8FFA] border-b-4 border-[#24251F] rounded-xl text-right p-4 text-4xl">
+          Skills
+        </button>
+
+        <button className="bg-[#E29103] border-b-4 border-[#24251F] rounded-xl text-right p-4 text-4xl">
+          Experience
+        </button>
+
+        <button className="bg-[#FC4B43] border-b-4 border-[#24251F] rounded-xl text-right p-4 text-4xl">
+          Education
+        </button>
+
+        <button className="bg-[#3F976F] border-b-4 border-[#24251F] rounded-xl text-right p-4 text-4xl">
+          Projects
+        </button>
+      </div>
     </div>
   );
 }
