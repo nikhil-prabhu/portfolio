@@ -15,19 +15,12 @@
 
 html,
 body {
-  @apply text-lg;
+  @apply text-lg text-white;
   font-family: "m6x11plus", monospace;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
-}
-
-a {
-  @apply font-mono underline underline-dotted;
-  text-decoration-thickness: 1px;
-  text-decoration-color: inherit;
-  -webkit-tap-highlight-color: transparent;
 }
 
 @layer utilities {
