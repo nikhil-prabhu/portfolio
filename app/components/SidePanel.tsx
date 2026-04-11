@@ -16,9 +16,13 @@ type SidePanelProps = {
 	matrixUrl: string;
 	steamUrl: string;
 	instagramUrl: string;
+	isShaderEnabled: boolean;
+	isCrtEnabled: boolean;
+	toggleShader: () => void;
+	toggleCrt: () => void;
 };
 
-export const SidePanel = ({ chipImage, name, title, location, gitHubUrl, linkedInUrl, linkedInId, emailUrl, matrixUrl, steamUrl, instagramUrl }: SidePanelProps) => {
+export const SidePanel = ({ chipImage, name, title, location, gitHubUrl, linkedInUrl, linkedInId, emailUrl, matrixUrl, steamUrl, instagramUrl, isShaderEnabled, isCrtEnabled, toggleShader, toggleCrt }: SidePanelProps) => {
 	const [isDragging, setIsDragging] = useState(false);
 
 	return (
@@ -105,8 +109,12 @@ export const SidePanel = ({ chipImage, name, title, location, gitHubUrl, linkedI
 			<div className="flex flex-col items-center justify-center w-full h-[250px]">
 				<div className="flex flex-row items-center justify-start gap-2 w-full h-full">
 					<div className="flex flex-col items-center justify-center gap-2 w-[30%] h-[80%]">
-						<button className="bg-[#FC4B43] w-full h-full rounded-xl border-r-4 border-b-4 border-[#24251F] text-2xl p-2">Options</button>
-						<button className="bg-[#E29103] w-full h-full rounded-xl border-r-4 border-b-4 border-[#24251F] text-2xl p-2">Credits</button>
+						<button className="bg-[#FC4B43] w-full h-full rounded-xl border-r-4 border-b-4 border-[#24251F] text-2xl p-2" onClick={toggleShader}>
+							{isShaderEnabled ? "Disable Motion" : "Enable Motion"}
+						</button>
+						<button className="bg-[#E29103] w-full h-full rounded-xl border-r-4 border-b-4 border-[#24251F] text-2xl p-2" onClick={toggleCrt}>
+							{isCrtEnabled ? "Disable CRT" : "Enable CRT"}
+						</button>
 					</div>
 
 					<div className="flex flex-col items-center justify-center gap-2 w-full h-full">

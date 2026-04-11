@@ -11,8 +11,10 @@ import "./tailwind.css";
 import { VaporwaveBackground } from "~/components/VaporwaveBackground";
 import faviconGif from "/favicon.gif";
 import Profile from "/profile.png";
+import Background from "/bg.jpg";
 import { LinksFunction } from "@remix-run/cloudflare";
 import { SidePanel } from "./components/SidePanel";
+import { useEffect, useState } from "react";
 
 export const links: LinksFunction = () => [
     {
@@ -41,10 +43,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+    const [isShaderEnabled, setIsShaderEnabled] = useState(true);
+    const [isCrtEnabled, setIsCrtEnabled] = useState(true);
+
+    useEffect(() => {
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+        if (motionQuery.matches) {
+            setIsShaderEnabled(false);
+            setIsCrtEnabled(false);
+        }
+    }, []);
+
     return (
         <div className="relative min-h-screen w-full">
-            <VaporwaveBackground />
-            <div className="crt-screen" />
+            {isShaderEnabled ?
+                <VaporwaveBackground />
+                : <div className="fixed inset-0 -z-10 h-full w-full bg-cover bg-center bg-no-repeat">
+                    <img src={Background} alt="Background" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]" />
+                </div>}
+            {isCrtEnabled && <div className="crt-screen" />}
 
             <SidePanel
                 name="Nikhil Prabhu"
@@ -57,7 +76,12 @@ export default function App() {
                 linkedInId={resources.linkedin.id}
                 emailUrl={resources.email.url}
                 matrixUrl={resources.matrix.url}
-                location={resources.location} />
+                location={resources.location}
+                isShaderEnabled={isShaderEnabled}
+                isCrtEnabled={isCrtEnabled}
+                toggleShader={() => setIsShaderEnabled(prev => !prev)}
+                toggleCrt={() => setIsCrtEnabled(prev => !prev)}
+            />
 
             {/* Shift content based on the panel's position */}
             <main className="relative z-10 pt-32 md:pl-72 md:pt-0">
