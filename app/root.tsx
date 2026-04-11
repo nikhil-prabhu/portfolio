@@ -5,6 +5,7 @@ import {
     Scripts,
     ScrollRestoration,
 } from "@remix-run/react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import "./tailwind.css";
 
@@ -45,10 +46,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
     const [isShaderEnabled, setIsShaderEnabled] = useState(true);
     const [isCrtEnabled, setIsCrtEnabled] = useState(true);
+    const [isHydrated, setIsHydrated] = useState(false);
 
     useEffect(() => {
+        setIsHydrated(true);
         const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
         if (motionQuery.matches) {
             setIsShaderEnabled(false);
             setIsCrtEnabled(false);
@@ -57,13 +59,44 @@ export default function App() {
 
     return (
         <div className="relative min-h-screen w-full">
-            {isShaderEnabled ?
-                <VaporwaveBackground />
-                : <div className="fixed inset-0 -z-10 h-full w-full bg-cover bg-center bg-no-repeat">
-                    <img src={Background} alt="Background" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]" />
-                </div>}
-            {isCrtEnabled && <div className="crt-screen" />}
+            <div className="fixed inset-0 z-0 overflow-hidden bg-[#10181A]">
+                <AnimatePresence mode="wait">
+                    {isShaderEnabled ? (
+                        <motion.div
+                            key="shader"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className="absolute inset-0 h-full w-full"
+                        >
+                            {isHydrated && <VaporwaveBackground />}
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            key="static"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className="absolute inset-0 h-full w-full"
+                        >
+                            <img
+                                src={Background}
+                                alt="Background"
+                                className="h-full w-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+
+            <main className="relative z-10 pt-32 md:pl-80 md:pt-0">
+                <div className="p-8">
+                    <Outlet />
+                </div>
+            </main>
 
             <SidePanel
                 name="Nikhil Prabhu"
@@ -83,12 +116,17 @@ export default function App() {
                 toggleCrt={() => setIsCrtEnabled(prev => !prev)}
             />
 
-            {/* Shift content based on the panel's position */}
-            <main className="relative z-10 pt-32 md:pl-72 md:pt-0">
-                <div className="p-8">
-                    <Outlet />
-                </div>
-            </main>
+            <AnimatePresence>
+                {isCrtEnabled && isHydrated && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="crt-screen pointer-events-none fixed inset-0 z-50"
+                    />
+                )}
+            </AnimatePresence>
         </div>
     );
 }

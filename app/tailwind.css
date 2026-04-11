@@ -17,17 +17,6 @@ html,
 body {
   @apply text-lg text-white;
   font-family: "m6x11plus", monospace;
-
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
-}
-
-@layer utilities {
-  .underline-dotted {
-    text-decoration: underline;
-    text-decoration-style: dotted;
-  }
 }
 
 @layer components {
