@@ -57,3 +57,28 @@ a {
     text-decoration-style: dotted;
   }
 }
+
+@layer components {
+  .crt-screen {
+    @apply pointer-events-none fixed inset-0 z-50;
+
+    background: linear-gradient(rgba(255, 255, 255, 0.02) 50%,
+        rgba(0, 0, 0, 0.18) 50%),
+      linear-gradient(90deg,
+        rgba(255, 0, 0, 0.03),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.03));
+
+    background-size: 100% 8px, 4px 100%;
+    mix-blend-mode: multiply;
+  }
+
+  .crt-screen::after {
+    content: "";
+    @apply absolute inset-0;
+    background: radial-gradient(circle,
+        transparent 60%,
+        rgba(0, 0, 0, 0.3) 150%);
+    animation: crt-flicker 0.1s infinite;
+  }
+}
