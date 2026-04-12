@@ -16,18 +16,16 @@ export default function AboutIndex() {
 			className="flex flex-col items-center justify-center"
 		>
 			<div className="w-full max-w-6xl rounded-2xl border-4 border-[#ACB9C4] bg-[#38464C] p-8">
-				<div className="flex flex-col gap-6">
+				<div className="flex flex-col gap-8">
 					<section>
-						<h2 className="text-3xl text-white">
+						<h2 className="text-3xl xl:text-6xl text-white">
 							About Me
 						</h2>
-						<p className="mt-2 text-lg leading-relaxed">
-							{resources.about.map((paragraph, index) => (
-								<p key={index} className="mb-4 text-lg">
-									{paragraph}
-								</p>
-							))}
-						</p>
+						{resources.about.map((paragraph, index) => (
+							<p key={index} className="mb-4 mt-4 text-xl xl:text-2xl">
+								{paragraph}
+							</p>
+						))}
 					</section>
 
 					<section className="bg-[#1A2527] border-b-4 border-[#131A1C] rounded-xl px-3 py-1 text-white">
@@ -81,10 +79,10 @@ function SkillTag({ icon, color, label, description }: { icon: IconType, color: 
 			{isHovered && (
 				<div className="absolute right-full top-1/2 z-50 mr-4 -translate-y-1/2 pointer-events-none border-b-4 border-[#918A93] rounded-xl w-[256px] normal-case tracking-normal">
 					<div className="flex flex-col bg-[#414143] border-4 border-[#D2D6DA] p-2 rounded-xl shadow-2xl w-full gap-1">
-						<h3 className="text-xl text-center">
+						<h3 className="text-xl xl:text-2xl text-center">
 							{label}
 						</h3>
-						<p className="text-lg text-[#414143] bg-white border-b-4 border-[#918A93] rounded-xl p-2">
+						<p className="text-lg xl:text-xl text-[#414143] bg-white border-b-4 border-[#918A93] rounded-xl p-2">
 							{description}
 						</p>
 					</div>
