@@ -81,6 +81,7 @@ export default function HomeLayout() {
 
         <NavLink
           to="/projects"
+          prefetch="intent"
           className={({ isActive }) => `
       bg-[#3F976F] border-b-4 border-[#24251F] rounded-xl p-4 text-2xl xl:text-4xl transition-all text-white uppercase
       ${isActive ? 'brightness-125 scale-105 -translate-y-1' : 'brightness-90 hover:brightness-100'}
