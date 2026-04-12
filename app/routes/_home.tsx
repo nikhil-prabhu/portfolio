@@ -44,7 +44,7 @@ async function fetchPinnedRepositories(username: string) {
 
 export default function HomeLayout() {
   return (
-    <div className="flex flex-col items-center justify-start gap-8 w-full h-full">
+    <div className="flex flex-col items-center justify-center gap-8 w-full h-full">
       <h1 className="text-6xl xl:text-9xl text-white">Welcome to my Portfolio</h1>
 
       <div className="flex flex-row items-center justify-center gap-4 rounded-xl border-b-4 border-[#131A1C] bg-[#38464C] p-4">
