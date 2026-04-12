@@ -89,6 +89,8 @@ export default function HomeLayout() {
           Projects
         </NavLink>
       </div>
+
+      <Outlet />
     </div>
   );
 }

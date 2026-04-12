@@ -132,7 +132,6 @@ export default function App() {
 }
 
 const resources = {
-    about: "Backend and Platform Engineer with 6+ years of experience building scalable backend services, developer platforms, and cloud automation using Go, Rust, and Python. Experienced in distributed systems, cloud-native infrastructure, and reliability engineering across AWS, Azure, and GCP. Focused on improving developer productivity, system reliability, and operational scalability through automation and reusable tooling.",
     email: {
         id: "nikhilprabhu98@gmail.com",
         url: "mailto:nikhilprabhu98@gmail.com",
