@@ -58,7 +58,7 @@ export default function App() {
     }, []);
 
     return (
-        <div className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+        <div className="relative min-h-screen w-full">
             <div className="fixed inset-0 z-0 overflow-hidden bg-[#10181A]">
                 <AnimatePresence mode="wait">
                     {isShaderEnabled ? (
