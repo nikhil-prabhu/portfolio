@@ -4,7 +4,7 @@ import { IconType } from "react-icons";
 import { DiJava } from "react-icons/di";
 import { FaAws, FaGitAlt, FaGithub, FaPython, FaRust } from "react-icons/fa";
 import { FaGolang } from "react-icons/fa6";
-import { SiAnsible, SiCplusplus, SiDocker, SiGooglecloud, SiKubernetes, SiTerraform, SiTypescript } from "react-icons/si";
+import { SiAnsible, SiCplusplus, SiGooglecloud, SiKubernetes, SiTerraform, SiTypescript } from "react-icons/si";
 import { VscAzure } from "react-icons/vsc";
 
 export default function AboutIndex() {
