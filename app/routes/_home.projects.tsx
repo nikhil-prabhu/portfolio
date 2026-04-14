@@ -7,7 +7,7 @@ import { getPinnedRepositories } from "~/services/github.server";
 import { GitHubRepository } from "~/types/github";
 import { FaCodeFork } from "react-icons/fa6";
 import { IconType } from "react-icons";
-import { SiPython, SiTypescript, SiGo, SiRust, SiJavascript, SiCplusplus, SiGnuemacs, SiLua } from "react-icons/si";
+import { SiPython, SiTypescript, SiGo, SiRust, SiJavascript, SiCplusplus, SiGnubash, SiGnuemacs, SiLua } from "react-icons/si";
 import { FaBalanceScale, FaCode, FaStar } from "react-icons/fa";
 import SectionBox from "~/components/SectionBox";
 import Container from "~/components/Container";
@@ -31,6 +31,7 @@ const getLanguageIcon = (langName: string | undefined): IconType => {
 		case "c++": return SiCplusplus;
 		case "emacs-lisp": return SiGnuemacs;
 		case "lua": return SiLua;
+		case "shell": return SiGnubash;
 		default: return FaCode;
 	}
 };
