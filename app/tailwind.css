@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "m6x11plus";
-  src: url("/public/fonts/m6x11plus.ttf") format("truetype");
+  src: url("/fonts/m6x11plus.ttf") format("truetype");
   font-style: monospace;
   font-weight: 400;
 }
