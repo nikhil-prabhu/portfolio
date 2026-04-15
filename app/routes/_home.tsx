@@ -1,6 +1,5 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
 import { NavLink, Outlet } from "@remix-run/react";
-import axios from "axios";
 
 
 export const meta: MetaFunction = () => {
@@ -9,38 +8,6 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "Welcome to my portfolio!" },
   ];
 };
-
-type Repository = {
-  name: string;
-  description: string;
-  language: string;
-  languageColor: string;
-  stars: number;
-  forks: number;
-};
-
-async function fetchPinnedRepositories(username: string) {
-  const GITHUB_API_URL = `https://pinned.berrysauce.dev/get/${username}`;
-
-  try {
-    const response = await axios.get(GITHUB_API_URL);
-
-    const repos: Repository[] = response.data.map((repo: any) => ({
-      name: repo.name,
-      description: repo.description,
-      url: `https://github.com/${username}/${repo.name}`,
-      language: repo.language,
-      languageColor: repo.languageColor,
-      stars: repo.stars,
-      forks: repo.forks,
-    }));
-
-    return repos;
-  } catch (error) {
-    console.error("Error fetching repositories:", error);
-    return [];
-  }
-}
 
 export default function HomeLayout() {
   return (
