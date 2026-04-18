@@ -26,11 +26,11 @@ export default function AboutIndex() {
 		<SectionBox>
 			<div className="flex flex-col gap-8">
 				<section>
-					<h2 className="text-3xl xl:text-6xl text-white">
+					<h2 className="text-2xl xl:text-4xl text-white">
 						About Me
 					</h2>
 					{resources.about.map((paragraph, index) => (
-						<p key={index} className="mb-4 mt-4 text-xl xl:text-2xl">
+						<p key={index} className="mb-4 mt-4 text-lg xl:text-xl">
 							{paragraph}
 						</p>
 					))}
@@ -124,10 +124,10 @@ function SkillTag({ icon: Icon, color, label, description }: {
 						<div
 							className="flex flex-col bg-[#414143] border-4 border-[#D2D6DA] p-2 rounded-xl shadow-2xl w-[256px] gap-1 border-b-[6px]"
 						>
-							<h3 className="text-xl xl:text-2xl text-center text-white">
+							<h3 className="text-lg xl:text-xl text-center text-white">
 								{label}
 							</h3>
-							<p className="text-lg xl:text-xl text-[#414143] bg-white border-b-4 border-[#918A93] rounded-xl p-2 text-shadow-none">
+							<p className="text-md xl:text-lg text-[#414143] bg-white border-b-4 border-[#918A93] rounded-xl p-2 text-shadow-none">
 								{description}
 							</p>
 						</div>

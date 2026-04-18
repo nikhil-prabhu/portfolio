@@ -60,8 +60,8 @@ export default function ProjectsView() {
 			<SectionBox>
 				<div className="flex flex-col gap-8">
 					<section>
-						<h2 className="text-3xl xl:text-6xl text-white">Projects</h2>
-						<span className="text-xl text-gray-300">Click a card to learn more about my projects.</span>
+						<h2 className="text-2xl xl:text-4xl">Projects</h2>
+						<span className="text-lg xl:text-xl">Click a card to learn more about my projects.</span>
 					</section>
 
 					<Container className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-8 gap-x-4 justify-items-center p-4">
@@ -115,7 +115,7 @@ export default function ProjectsView() {
 									/>
 								</MetaBar>
 
-								<Container className="p-4">
+								<Container className="p-4 text-lg xl:text-xl">
 									{activeRepo.description || "No description provided."}
 									{activeRepo.url && (
 										<a href={activeRepo.url} target="_blank" rel="noopener noreferrer" className="text-[#0F8FFA] underline ml-2">

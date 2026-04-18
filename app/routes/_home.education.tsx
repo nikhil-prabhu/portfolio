@@ -18,14 +18,13 @@ export default function EducationView() {
 			<SectionBox>
 				<div className="flex flex-col gap-8">
 					<section>
-						<h2 className="text-3xl xl:text-6xl text-white">
+						<h2 className="text-2xl xl:text-4xl text-white">
 							Education
 						</h2>
-						<span className="text-xl text-gray-300">
+						<span className="text-lg xl:text-xl">
 							Click a card to learn more about my education.
 						</span>
 					</section>
-
 
 					<Container className="flex flex-wrap gap-6 items-center justify-center p-4">
 						{education.map((exp, index) => (
@@ -70,13 +69,13 @@ export default function EducationView() {
 
 							<Container className="p-4">
 								{activeEducation.tasks.length > 0 ? (
-									<ul className="list-disc list-inside text-xl xl:text-2xl text-gray-300">
+									<ul className="list-disc list-inside text-lg xl:text-xl">
 										{activeEducation.tasks.map((task, index) => (
 											<li key={index}>{task}</li>
 										))}
 									</ul>
 								) : (
-									<p className="text-xl xl:text-2xl text-gray-300">
+									<p className="text-lg xl:text-xl">
 										No specific tasks available for this role.
 									</p>
 								)}

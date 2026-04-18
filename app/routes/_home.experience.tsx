@@ -18,10 +18,10 @@ export default function ExperienceView() {
 			<SectionBox>
 				<div className="flex flex-col gap-8">
 					<section>
-						<h2 className="text-3xl xl:text-6xl text-white">
+						<h2 className="text-2xl xl:text-4xl text-white">
 							Experience
 						</h2>
-						<span className="text-xl text-gray-300">
+						<span className="text-lg xl:text-xl">
 							Click a card to learn more about my experience.
 						</span>
 					</section>
@@ -69,13 +69,13 @@ export default function ExperienceView() {
 
 							<Container className="p-4">
 								{activeExperience.tasks.length > 0 ? (
-									<ul className="list-disc list-inside text-xl xl:text-2xl text-gray-300">
+									<ul className="list-disc list-inside text-lg xl:text-xl">
 										{activeExperience.tasks.map((task, index) => (
 											<li key={index}>{task}</li>
 										))}
 									</ul>
 								) : (
-									<p className="text-xl xl:text-2xl text-gray-300">
+									<p className="text-lg xl:text-xl">
 										No specific tasks available for this role.
 									</p>
 								)}

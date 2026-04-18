@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
 export default function HomeLayout() {
   return (
     <div className="flex flex-col items-center justify-start gap-8 w-full h-full">
-      <h1 className="text-6xl xl:text-9xl text-white text-shadow-heavy text-center">Welcome to my Portfolio</h1>
+      <h1 className="text-4xl xl:text-7xl text-white text-shadow-heavy text-center">Welcome to my Portfolio</h1>
 
       <div className="flex flex-col md:flex-row items-center justify-center gap-4 rounded-xl border-b-4 border-[#131A1C] bg-[#38464C] p-4 w-full md:w-auto">
         <NavLink
@@ -20,7 +20,7 @@ export default function HomeLayout() {
           end
           preventScrollReset
           className={({ isActive }) => `
-      bg-[#0F8FFA] border-b-4 border-[#24251F] rounded-xl p-4 text-2xl xl:text-4xl transition-all text-white text-center uppercase w-full md:w-auto
+      bg-[#0F8FFA] border-b-4 border-[#24251F] rounded-xl p-4 text-xl xl:text-2xl transition-all text-white text-center uppercase w-full md:w-auto
       ${isActive ? 'brightness-125 scale-105 -translate-y-1' : 'brightness-90 hover:brightness-100'}
     `}
         >
@@ -31,7 +31,7 @@ export default function HomeLayout() {
           to="/experience"
           preventScrollReset
           className={({ isActive }) => `
-      bg-[#E29103] border-b-4 border-[#24251F] rounded-xl p-4 text-2xl xl:text-4xl transition-all text-white text-center uppercase w-full md:w-auto
+      bg-[#E29103] border-b-4 border-[#24251F] rounded-xl p-4 text-xl xl:text-2xl transition-all text-white text-center uppercase w-full md:w-auto
       ${isActive ? 'brightness-125 scale-105 -translate-y-1' : 'brightness-90 hover:brightness-100'}
     `}
         >
@@ -42,7 +42,7 @@ export default function HomeLayout() {
           to="/education"
           preventScrollReset
           className={({ isActive }) => `
-      bg-[#FC4B43] border-b-4 border-[#24251F] rounded-xl p-4 text-2xl xl:text-4xl transition-all text-white text-center uppercase w-full md:w-auto
+      bg-[#FC4B43] border-b-4 border-[#24251F] rounded-xl p-4 text-xl xl:text-2xl transition-all text-white text-center uppercase w-full md:w-auto
       ${isActive ? 'brightness-125 scale-105 -translate-y-1' : 'brightness-90 hover:brightness-100'}
     `}
         >
@@ -54,7 +54,7 @@ export default function HomeLayout() {
           prefetch="intent"
           preventScrollReset
           className={({ isActive }) => `
-      bg-[#3F976F] border-b-4 border-[#24251F] rounded-xl p-4 text-2xl xl:text-4xl transition-all text-white text-center uppercase w-full md:w-auto
+      bg-[#3F976F] border-b-4 border-[#24251F] rounded-xl p-4 text-xl xl:text-2xl transition-all text-white text-center uppercase w-full md:w-auto
       ${isActive ? 'brightness-125 scale-105 -translate-y-1' : 'brightness-90 hover:brightness-100'}
     `}
         >
