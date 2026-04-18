@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import { VaporwaveBackground } from "~/components/VaporwaveBackground";
 import { motion, AnimatePresence } from "framer-motion";
 
+import Background from "/bg.jpg"
+
 export const links: LinksFunction = () => [
     { rel: "icon", href: favicon, type: "image/gif" },
 ];
@@ -30,7 +32,9 @@ function BackgroundProvider({ isShaderEnabled }: { isShaderEnabled: boolean }) {
                         {isHydrated && <VaporwaveBackground />}
                     </motion.div>
                 ) : (
-                    <div className="absolute inset-0 h-full w-full bg-[#10181A]" />
+                    <motion.div key="static" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 h-full w-full">
+                        <img src={Background} alt="Background" className="object-cover w-full h-full" />
+                    </motion.div>
                 )}
             </AnimatePresence>
         </div>
