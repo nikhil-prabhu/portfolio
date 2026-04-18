@@ -77,7 +77,7 @@ function SkillTag({ icon, color, label, description }: { icon: IconType, color: 
 						<h3 className="text-xl xl:text-2xl text-center">
 							{label}
 						</h3>
-						<p className="text-lg xl:text-xl text-[#414143] bg-white border-b-4 border-[#918A93] rounded-xl p-2">
+						<p className="text-lg xl:text-xl text-[#414143] bg-white border-b-4 border-[#918A93] rounded-xl p-2 text-shadow-none">
 							{description}
 						</p>
 					</div>

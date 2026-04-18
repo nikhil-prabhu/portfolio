@@ -8,7 +8,7 @@ export const MetaBar = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const MetaPill = ({ children }: { children: React.ReactNode }) => (
-	<span className="bg-white text-[#516164] rounded-xl p-2 px-4 shrink-0 shadow-sm">
+	<span className="bg-white text-[#516164] rounded-xl p-2 px-4 shrink-0 shadow-sm text-shadow-none">
 		{children}
 	</span>
 );
@@ -30,11 +30,11 @@ export const MetaDataBlock = ({
 }) => (
 	<div className="flex flex-row items-center justify-center bg-[#10181A] border-4 border-[#10181A] rounded-xl overflow-hidden shrink-0 h-full">
 		<div className="bg-[#0F8FFA] rounded-xl px-4 py-1">
-			<span className="flex flex-row items-center justify-end text-white">{leftLabel}</span>
+			<span className="flex flex-row items-center justify-end text-white text-shadow-none">{leftLabel}</span>
 		</div>
-		<span className="text-xl text-[#F64A40] px-2 text-center">{separator}</span>
+		<span className="text-xl text-[#F64A40] px-2 text-center text-shadow-none">{separator}</span>
 		<div className="bg-[#FC4B43] rounded-xl px-4 py-1">
-			<span className="flex flex-row items-center justify-start text-white">{rightLabel}</span>
+			<span className="flex flex-row items-center justify-start text-white text-shadow-none">{rightLabel}</span>
 		</div>
 	</div>
 );
@@ -42,7 +42,7 @@ export const MetaDataBlock = ({
 export const MetaInfo = ({ icon: Icon, label }: { icon: IconType; label: string }) => (
 	<div className="flex flex-row items-center gap-2 shrink-0 lg:w-fit lg:max-w-[256px] pr-2">
 		<Icon className="shrink-0" size={20} />
-		<div className="bg-[#1A2527] text-center rounded-xl p-2 px-4 w-full text-white border-b-2 border-[#131A1C]">
+		<div className="bg-[#1A2527] text-center rounded-xl p-2 px-4 w-full text-[#E29103] border-b-2 border-[#131A1C]">
 			{label}
 		</div>
 	</div>

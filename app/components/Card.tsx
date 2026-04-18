@@ -90,7 +90,7 @@ export default function Card({ index, faceIcon, label, value, isSelected, isLoad
 							</div>
 
 							<div className="text-center p-2">
-								<h3 className="text-xl xl:text-2xl text-[#414143]">
+								<h3 className="text-xl xl:text-2xl text-[#414143] text-shadow-none">
 									{label}
 								</h3>
 							</div>

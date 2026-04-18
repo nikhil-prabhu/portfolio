@@ -13,11 +13,14 @@ export default {
   plugins: [
     plugin(function ({ addUtilities, theme }) {
       addUtilities({
+        ".text-shadow-heavy": {
+          "text-shadow": "3px 3px 0px rgba(0, 0, 0, 0.6)",
+        },
         ".text-shadow-game": {
           "text-shadow": "2px 2px 0px rgba(0, 0, 0, 0.4)",
         },
-        ".text-shadow-heavy": {
-          "text-shadow": "3px 3px 0px rgba(0, 0, 0, 0.6)",
+        ".text-shadow-none": {
+          "text-shadow": "none",
         },
       });
     }),
