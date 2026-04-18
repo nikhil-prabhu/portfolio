@@ -130,7 +130,7 @@ export default function App() {
             />
 
             <main className="relative z-10 pt-32 md:pl-80 md:pt-0">
-                <div className="p-8">
+                <div className="p-2 md:p-8">
                     <Outlet />
                 </div>
             </main>
