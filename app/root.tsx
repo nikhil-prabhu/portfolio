@@ -17,7 +17,7 @@ import Profile from "/profile.png";
 import Background from "/bg.jpg";
 import { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { SidePanel } from "./components/SidePanel";
-import { Suspense, useEffect, useState, startTransition } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { getStats } from "./services/github.server";
 
 export const links: LinksFunction = () => [
@@ -28,9 +28,8 @@ export const links: LinksFunction = () => [
     },
 ]
 
-// Ensure the document itself is never cached to prevent streaming truncation
 export const headers = () => ({
-    "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+    "Cache-Control": "no-store, no-cache, must-revalidate",
 });
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
@@ -38,7 +37,10 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
         const statsPromise = getStats(
             context.cloudflare.env.GITHUB_USER,
             context.cloudflare.env.GITHUB_TOKEN,
-        );
+        ).then(resolved => {
+            console.log(">>> [SERVER] Fetched GitHub stats:", resolved);
+            return resolved;
+        });
         return { stats: statsPromise };
     } catch (error) {
         console.error("GitHub API Error:", error);
@@ -64,68 +66,72 @@ export function Layout({ children }: { children: React.ReactNode }) {
     );
 }
 
-// Sub-component to isolate hydration-dependent UI
-function VisualEffects({ isShaderEnabled, isCrtEnabled, isHydrated }: { isShaderEnabled: boolean, isCrtEnabled: boolean, isHydrated: boolean }) {
+function BackgroundProvider({ isShaderEnabled }: { isShaderEnabled: boolean }) {
+    const [isHydrated, setIsHydrated] = useState(false);
+    useEffect(() => setIsHydrated(true), []);
+
     return (
-        <>
-            <div className="fixed inset-0 z-0 overflow-hidden bg-[#10181A]">
-                <AnimatePresence mode="wait">
-                    {isShaderEnabled ? (
-                        <motion.div
-                            key="shader"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className="absolute inset-0 h-full w-full"
-                        >
-                            {isHydrated && <VaporwaveBackground />}
-                        </motion.div>
-                    ) : (
-                        <motion.div
-                            key="static"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className="absolute inset-0 h-full w-full"
-                        >
-                            <img src={Background} alt="Background" className="h-full w-full object-cover" />
-                            <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </div>
-            <AnimatePresence>
-                {isCrtEnabled && isHydrated && (
+        <div className="fixed inset-0 z-0 overflow-hidden bg-[#10181A]">
+            <AnimatePresence mode="wait">
+                {isShaderEnabled ? (
                     <motion.div
+                        key="shader"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.4 }}
-                        className="crt-screen pointer-events-none fixed inset-0 z-50"
-                    />
+                        transition={{ duration: 0.8 }}
+                        className="absolute inset-0 h-full w-full"
+                    >
+                        {isHydrated && <VaporwaveBackground />}
+                    </motion.div>
+                ) : (
+                    <motion.div
+                        key="static"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="absolute inset-0 h-full w-full"
+                    >
+                        <img src={Background} alt="Background" className="h-full w-full object-cover" />
+                        <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
+                    </motion.div>
                 )}
             </AnimatePresence>
-        </>
+        </div>
+    );
+}
+
+function CrtOverlay({ enabled }: { enabled: boolean }) {
+    const [isHydrated, setIsHydrated] = useState(false);
+    useEffect(() => setIsHydrated(true), []);
+
+    return (
+        <AnimatePresence>
+            {enabled && isHydrated && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="crt-screen pointer-events-none fixed inset-0 z-50"
+                />
+            )}
+        </AnimatePresence>
     );
 }
 
 export default function App() {
     const [isShaderEnabled, setIsShaderEnabled] = useState(true);
     const [isCrtEnabled, setIsCrtEnabled] = useState(true);
-    const [isHydrated, setIsHydrated] = useState(false);
     const { stats } = useLoaderData<typeof loader>();
 
     useEffect(() => {
-        startTransition(() => {
-            setIsHydrated(true);
-            const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-            if (motionQuery.matches) {
-                setIsShaderEnabled(false);
-                setIsCrtEnabled(false);
-            }
-        });
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (motionQuery.matches) {
+            setIsShaderEnabled(false);
+            setIsCrtEnabled(false);
+        }
     }, []);
 
     const commonProps = {
@@ -148,11 +154,7 @@ export default function App() {
 
     return (
         <div className="relative min-h-screen w-full">
-            <VisualEffects
-                isShaderEnabled={isShaderEnabled}
-                isCrtEnabled={isCrtEnabled}
-                isHydrated={isHydrated}
-            />
+            <BackgroundProvider isShaderEnabled={isShaderEnabled} />
 
             <Suspense fallback={<SidePanel {...commonProps} gitHubFollowers={0} gitHubRepos={0} />}>
                 <Await resolve={stats}>
@@ -171,6 +173,8 @@ export default function App() {
                     <Outlet />
                 </div>
             </main>
+
+            <CrtOverlay enabled={isCrtEnabled} />
         </div>
     );
 }
