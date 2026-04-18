@@ -11,7 +11,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import "./tailwind.css";
 
 import { VaporwaveBackground } from "~/components/VaporwaveBackground";
-import faviconGif from "/favicon.gif";
+import favicon from "/favicon.png";
 import Profile from "/profile.png";
 import Background from "/bg.jpg";
 import { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
@@ -23,7 +23,7 @@ import { GitHubStats } from "./types/github";
 export const links: LinksFunction = () => [
     {
         rel: "icon",
-        href: faviconGif,
+        href: favicon,
         type: "image/gif",
     },
 ]
