@@ -89,7 +89,7 @@ function Profile({ chipImage, name, title, gitHubUrl }: ProfileProps) {
 								: "drop-shadow(6px 6px 0px rgba(0,0,0,0.5))"
 						}}
 
-						className="z-10 w-20 xl:w-28 cursor-grab"
+						className="w-20 xl:w-28 cursor-grab"
 					>
 						<img
 							src={chipImage}
@@ -263,7 +263,7 @@ export function SidePanel({
 		<aside
 			className="
                 /* SHARED STYLES */
-                flex flex-col items-center border-[#3D4142] bg-[#232C2C] shadow-2xl transition-all gap-2 p-2 z-10
+                flex flex-col items-center border-[#3D4142] bg-[#232C2C] shadow-2xl transition-all gap-2 p-2 z-30
                 
                 /* MOBILE STYLES (Landing Page Mode) */
                 relative w-[calc(100%-1rem)] m-2 rounded-xl border-4 min-h-[calc(100vh-1rem)] justify-center

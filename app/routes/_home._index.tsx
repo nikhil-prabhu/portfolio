@@ -117,7 +117,7 @@ function SkillTag({ icon: Icon, color, label, description }: {
 				<FloatingPortal>
 					<div
 						ref={refs.setFloating}
-						style={{ ...floatingStyles, zIndex: 20 }}
+						style={{ ...floatingStyles, zIndex: 40 }}
 						{...getFloatingProps()}
 						className="pointer-events-none"
 					>
