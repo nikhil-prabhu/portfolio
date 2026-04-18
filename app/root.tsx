@@ -109,12 +109,6 @@ export default function App() {
                 </AnimatePresence>
             </div>
 
-            <main className="relative z-10 pt-32 md:pl-80 md:pt-0">
-                <div className="p-8">
-                    <Outlet />
-                </div>
-            </main>
-
             <SidePanel
                 name="Nikhil Prabhu"
                 title="The Engineer"
@@ -134,6 +128,12 @@ export default function App() {
                 toggleShader={() => setIsShaderEnabled(prev => !prev)}
                 toggleCrt={() => setIsCrtEnabled(prev => !prev)}
             />
+
+            <main className="relative z-10 pt-32 md:pl-80 md:pt-0">
+                <div className="p-8">
+                    <Outlet />
+                </div>
+            </main>
 
             <AnimatePresence>
                 {isCrtEnabled && isHydrated && (
