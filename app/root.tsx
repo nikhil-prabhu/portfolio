@@ -28,15 +28,17 @@ export const links: LinksFunction = () => [
     },
 ]
 
+// Ensure the document itself is never cached to prevent streaming truncation
+export const headers = () => ({
+    "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+});
+
 export const loader = async ({ context }: LoaderFunctionArgs) => {
     try {
         const statsPromise = getStats(
             context.cloudflare.env.GITHUB_USER,
             context.cloudflare.env.GITHUB_TOKEN,
-        ).then(resolved => {
-            console.log(">>> [SERVER] Fetched GitHub stats:", resolved);
-            return resolved;
-        });
+        );
         return { stats: statsPromise };
     } catch (error) {
         console.error("GitHub API Error:", error);
@@ -62,25 +64,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
     );
 }
 
-export default function App() {
-    const [isShaderEnabled, setIsShaderEnabled] = useState(true);
-    const [isCrtEnabled, setIsCrtEnabled] = useState(true);
-    const [isHydrated, setIsHydrated] = useState(false);
-    const { stats } = useLoaderData<typeof loader>();
-
-    useEffect(() => {
-        startTransition(() => {
-            setIsHydrated(true);
-            const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-            if (motionQuery.matches) {
-                setIsShaderEnabled(false);
-                setIsCrtEnabled(false);
-            }
-        });
-    }, []);
-
+// Sub-component to isolate hydration-dependent UI
+function VisualEffects({ isShaderEnabled, isCrtEnabled, isHydrated }: { isShaderEnabled: boolean, isCrtEnabled: boolean, isHydrated: boolean }) {
     return (
-        <div className="relative min-h-screen w-full">
+        <>
             <div className="fixed inset-0 z-0 overflow-hidden bg-[#10181A]">
                 <AnimatePresence mode="wait">
                     {isShaderEnabled ? (
@@ -103,70 +90,12 @@ export default function App() {
                             transition={{ duration: 0.8 }}
                             className="absolute inset-0 h-full w-full"
                         >
-                            <img
-                                src={Background}
-                                alt="Background"
-                                className="h-full w-full object-cover"
-                            />
+                            <img src={Background} alt="Background" className="h-full w-full object-cover" />
                             <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
                         </motion.div>
                     )}
                 </AnimatePresence>
             </div>
-
-            <Suspense fallback={
-                <SidePanel
-                    name="Nikhil Prabhu"
-                    title="The Engineer"
-                    chipImage={Profile}
-                    gitHubFollowers={0}
-                    gitHubRepos={0}
-                    gitHubUrl={resources.github.url}
-                    steamUrl={resources.steam.url}
-                    instagramUrl={resources.instagram.url}
-                    linkedInUrl={resources.linkedin.url}
-                    linkedInId={resources.linkedin.id}
-                    emailUrl={resources.email.url}
-                    matrixUrl={resources.matrix.url}
-                    location={resources.location}
-                    isShaderEnabled={isShaderEnabled}
-                    isCrtEnabled={isCrtEnabled}
-                    toggleShader={() => setIsShaderEnabled(prev => !prev)}
-                    toggleCrt={() => setIsCrtEnabled(prev => !prev)}
-                />
-            }>
-                <Await resolve={stats}>
-                    {(resolvedStats) => (
-                        <SidePanel
-                            name="Nikhil Prabhu"
-                            title="The Engineer"
-                            chipImage={Profile}
-                            gitHubFollowers={resolvedStats.followers.totalCount || 0}
-                            gitHubRepos={resolvedStats.repositories.totalCount || 0}
-                            gitHubUrl={resources.github.url}
-                            steamUrl={resources.steam.url}
-                            instagramUrl={resources.instagram.url}
-                            linkedInUrl={resources.linkedin.url}
-                            linkedInId={resources.linkedin.id}
-                            emailUrl={resources.email.url}
-                            matrixUrl={resources.matrix.url}
-                            location={resources.location}
-                            isShaderEnabled={isShaderEnabled}
-                            isCrtEnabled={isCrtEnabled}
-                            toggleShader={() => setIsShaderEnabled(prev => !prev)}
-                            toggleCrt={() => setIsCrtEnabled(prev => !prev)}
-                        />
-                    )}
-                </Await>
-            </Suspense>
-
-
-            <main className="relative z-10 pt-32 md:pl-80 md:pt-0">
-                <div className="p-2 md:p-8">
-                    <Outlet />
-                </div>
-            </main>
-
             <AnimatePresence>
                 {isCrtEnabled && isHydrated && (
                     <motion.div
@@ -178,34 +107,80 @@ export default function App() {
                     />
                 )}
             </AnimatePresence>
+        </>
+    );
+}
+
+export default function App() {
+    const [isShaderEnabled, setIsShaderEnabled] = useState(true);
+    const [isCrtEnabled, setIsCrtEnabled] = useState(true);
+    const [isHydrated, setIsHydrated] = useState(false);
+    const { stats } = useLoaderData<typeof loader>();
+
+    useEffect(() => {
+        startTransition(() => {
+            setIsHydrated(true);
+            const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (motionQuery.matches) {
+                setIsShaderEnabled(false);
+                setIsCrtEnabled(false);
+            }
+        });
+    }, []);
+
+    const commonProps = {
+        name: "Nikhil Prabhu",
+        title: "The Engineer",
+        chipImage: Profile,
+        gitHubUrl: resources.github.url,
+        steamUrl: resources.steam.url,
+        instagramUrl: resources.instagram.url,
+        linkedInUrl: resources.linkedin.url,
+        linkedInId: resources.linkedin.id,
+        emailUrl: resources.email.url,
+        matrixUrl: resources.matrix.url,
+        location: resources.location,
+        isShaderEnabled,
+        isCrtEnabled,
+        toggleShader: () => setIsShaderEnabled(prev => !prev),
+        toggleCrt: () => setIsCrtEnabled(prev => !prev),
+    };
+
+    return (
+        <div className="relative min-h-screen w-full">
+            <VisualEffects
+                isShaderEnabled={isShaderEnabled}
+                isCrtEnabled={isCrtEnabled}
+                isHydrated={isHydrated}
+            />
+
+            <Suspense fallback={<SidePanel {...commonProps} gitHubFollowers={0} gitHubRepos={0} />}>
+                <Await resolve={stats}>
+                    {(resolvedStats) => (
+                        <SidePanel
+                            {...commonProps}
+                            gitHubFollowers={resolvedStats.followers.totalCount || 0}
+                            gitHubRepos={resolvedStats.repositories.totalCount || 0}
+                        />
+                    )}
+                </Await>
+            </Suspense>
+
+            <main className="relative z-10 pt-32 md:pl-80 md:pt-0">
+                <div className="p-2 md:p-8">
+                    <Outlet />
+                </div>
+            </main>
         </div>
     );
 }
 
 const resources = {
-    email: {
-        id: "nikhilprabhu98@gmail.com",
-        url: "mailto:nikhilprabhu98@gmail.com",
-    },
-    matrix: {
-        id: "@nikhilprabhu:matrix.org",
-        url: "https://matrix.to/#/@nikhilprabhu:matrix.org",
-    },
-    linkedin: {
-        id: "in/nikhil-prabhu31",
-        url: "https://linkedin.com/in/nikhil-prabhu31",
-    },
-    github: {
-        id: "nikhil-prabhu",
-        url: "https://github.com/nikhil-prabhu",
-    },
-    steam: {
-        id: "dextrocardiac",
-        url: "https://steamcommunity.com/id/dextrocardiac/",
-    },
-    instagram: {
-        id: "_nikhilprabhu",
-        url: "https://instagram.com/_nikhilprabhu",
-    },
+    email: { id: "nikhilprabhu98@gmail.com", url: "mailto:nikhilprabhu98@gmail.com" },
+    matrix: { id: "@nikhilprabhu:matrix.org", url: "https://matrix.to/#/@nikhilprabhu:matrix.org" },
+    linkedin: { id: "in/nikhil-prabhu31", url: "https://linkedin.com/in/nikhil-prabhu31" },
+    github: { id: "nikhil-prabhu", url: "https://github.com/nikhil-prabhu" },
+    steam: { id: "dextrocardiac", url: "https://steamcommunity.com/id/dextrocardiac/" },
+    instagram: { id: "_nikhilprabhu", url: "https://instagram.com/_nikhilprabhu" },
     location: "Coimbatore, India",
 };
