@@ -12,7 +12,7 @@ export async function getPinnedRepositories(
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
-				"User-Agent": "nikhil-prabhu-portfolio (nikhilprabhu98@gmail.com)",
+				"User-Agent": `${username}-portfolio`,
 			},
 			body: JSON.stringify({
 				query: getPinnedReposQuery,
@@ -70,7 +70,7 @@ export async function getStats(
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
-				"User-Agent": "nikhil-prabhu-portfolio (nikhilprabhu98@gmail.com)",
+				"User-Agent": `${username}-portfolio`,
 			},
 			body: JSON.stringify({
 				query: getStatsQuery,
