@@ -1,4 +1,5 @@
 import {
+    Await,
     Links,
     Meta,
     Outlet,
@@ -16,7 +17,7 @@ import Profile from "/profile.png";
 import Background from "/bg.jpg";
 import { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { SidePanel } from "./components/SidePanel";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { getStats } from "./services/github.server";
 import { GitHubStats } from "./types/github";
 
@@ -114,25 +115,53 @@ export default function App() {
                 </AnimatePresence>
             </div>
 
-            <SidePanel
-                name="Nikhil Prabhu"
-                title="The Engineer"
-                chipImage={Profile}
-                gitHubFollowers={data?.followers.totalCount || 0}
-                gitHubRepos={data?.repositories.totalCount || 0}
-                gitHubUrl={resources.github.url}
-                steamUrl={resources.steam.url}
-                instagramUrl={resources.instagram.url}
-                linkedInUrl={resources.linkedin.url}
-                linkedInId={resources.linkedin.id}
-                emailUrl={resources.email.url}
-                matrixUrl={resources.matrix.url}
-                location={resources.location}
-                isShaderEnabled={isShaderEnabled}
-                isCrtEnabled={isCrtEnabled}
-                toggleShader={() => setIsShaderEnabled(prev => !prev)}
-                toggleCrt={() => setIsCrtEnabled(prev => !prev)}
-            />
+            <Suspense fallback={
+                <SidePanel
+                    name="Nikhil Prabhu"
+                    title="The Engineer"
+                    chipImage={Profile}
+                    gitHubFollowers={0}
+                    gitHubRepos={0}
+                    gitHubUrl={resources.github.url}
+                    steamUrl={resources.steam.url}
+                    instagramUrl={resources.instagram.url}
+                    linkedInUrl={resources.linkedin.url}
+                    linkedInId={resources.linkedin.id}
+                    emailUrl={resources.email.url}
+                    matrixUrl={resources.matrix.url}
+                    location={resources.location}
+                    isShaderEnabled={isShaderEnabled}
+                    isCrtEnabled={isCrtEnabled}
+                    toggleShader={() => setIsShaderEnabled(prev => !prev)}
+                    toggleCrt={() => setIsCrtEnabled(prev => !prev)}
+                />
+            }>
+                <Await resolve={stats}>
+                    {(resolvedStats) => {
+                        return (
+                            <SidePanel
+                                name="Nikhil Prabhu"
+                                title="The Engineer"
+                                chipImage={Profile}
+                                gitHubFollowers={resolvedStats.followers.totalCount || 0}
+                                gitHubRepos={resolvedStats.repositories.totalCount || 0}
+                                gitHubUrl={resources.github.url}
+                                steamUrl={resources.steam.url}
+                                instagramUrl={resources.instagram.url}
+                                linkedInUrl={resources.linkedin.url}
+                                linkedInId={resources.linkedin.id}
+                                emailUrl={resources.email.url}
+                                matrixUrl={resources.matrix.url}
+                                location={resources.location}
+                                isShaderEnabled={isShaderEnabled}
+                                isCrtEnabled={isCrtEnabled}
+                                toggleShader={() => setIsShaderEnabled(prev => !prev)}
+                                toggleCrt={() => setIsCrtEnabled(prev => !prev)}
+                            />
+                        )
+                    }}
+                </Await>
+            </Suspense>
 
             <main className="relative z-10 pt-32 md:pl-80 md:pt-0">
                 <div className="p-2 md:p-8">
