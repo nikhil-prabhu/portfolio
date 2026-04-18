@@ -33,7 +33,10 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
         const statsPromise = getStats(
             context.cloudflare.env.GITHUB_USER,
             context.cloudflare.env.GITHUB_TOKEN,
-        );
+        ).then(resolved => {
+            console.log(">>> [SERVER] Fetched GitHub stats:", resolved);
+            return resolved;
+        });
         return { stats: statsPromise };
     } catch (error) {
         console.error("GitHub API Error:", error);

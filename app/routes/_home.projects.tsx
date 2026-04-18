@@ -18,7 +18,10 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 		const reposPromise = getPinnedRepositories(
 			context.cloudflare.env.GITHUB_USER,
 			context.cloudflare.env.GITHUB_TOKEN,
-		);
+		).then(resolved => {
+			console.log(">>> [SERVER] Fetched GitHub pinned repos:", resolved);
+			return resolved;
+		});
 		return { repos: reposPromise };
 	} catch (error) {
 		console.error("GitHub API Error:", error);
