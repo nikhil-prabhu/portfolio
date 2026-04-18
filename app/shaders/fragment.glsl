@@ -52,25 +52,16 @@ vec4 effect(vec3 screen_coords, float scale) {
 }
 
 void main() {
-    // 1. Setup normalized coordinates (-0.5 to 0.5)
     vec2 uv = gl_FragCoord.xy / iResolution.xy - 0.5;
     uv.x *= iResolution.x / iResolution.y;
 
-    // 2. Setup normalized mouse (-0.5 to 0.5)
     vec2 mouse = (iMouse.xy / iResolution.xy) - 0.5;
     mouse.x *= iResolution.x / iResolution.y;
 
-    // 3. DISTORTION MATH
-    // Calculate distance between current pixel and the mouse
     float dist = length(uv - mouse);
-    
-    // Create a 'pull' strength. exp(-dist) means it is very strong 
-    // exactly at the mouse and falls off quickly.
     float pull = exp(-dist * 2.5) * 0.15; 
     
-    // Warp the UVs by pulling them toward the mouse position
     vec2 warpedUv = uv + (mouse - uv) * pull;
 
-    // 4. Output with warped UVs
     fragColor = effect(vec3(warpedUv, 0.), 2.0);
 }

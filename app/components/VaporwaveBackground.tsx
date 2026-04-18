@@ -1,5 +1,6 @@
 // Inspired by the background shaders in Balatro by LocalThunk.
 // Credits for the shader code: https://www.shadertoy.com/view/w3lGzH
+// NOTE: The shader code has been slightly modified/customized to fit my needs, but the core logic and visual style remain intact.
 import React, { useEffect, useRef } from 'react';
 import vertexShader from '../shaders/vertex.glsl?raw';
 import fragmentShader from '../shaders/fragment.glsl?raw';
@@ -36,12 +37,10 @@ export const VaporwaveBackground = () => {
 
 		gl.useProgram(program);
 
-		// Uniform locations
 		const mouseLoc = gl.getUniformLocation(program, "iMouse");
 		const timeLoc = gl.getUniformLocation(program, "iTime");
 		const resLoc = gl.getUniformLocation(program, "iResolution");
 
-		// Initial mouse state (Center of screen)
 		let mouseX = window.innerWidth / 2;
 		let mouseY = window.innerHeight / 2;
 
@@ -51,7 +50,6 @@ export const VaporwaveBackground = () => {
 		};
 		window.addEventListener('mousemove', handleMouseMove);
 
-		// Full-screen quad buffer
 		const buffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
