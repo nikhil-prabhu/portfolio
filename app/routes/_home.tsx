@@ -18,6 +18,7 @@ export default function HomeLayout() {
         <NavLink
           to="/"
           end
+          preventScrollReset
           className={({ isActive }) => `
       bg-[#0F8FFA] border-b-4 border-[#24251F] rounded-xl p-4 text-2xl xl:text-4xl transition-all text-white text-center uppercase w-full md:w-auto
       ${isActive ? 'brightness-125 scale-105 -translate-y-1' : 'brightness-90 hover:brightness-100'}
@@ -28,6 +29,7 @@ export default function HomeLayout() {
 
         <NavLink
           to="/experience"
+          preventScrollReset
           className={({ isActive }) => `
       bg-[#E29103] border-b-4 border-[#24251F] rounded-xl p-4 text-2xl xl:text-4xl transition-all text-white text-center uppercase w-full md:w-auto
       ${isActive ? 'brightness-125 scale-105 -translate-y-1' : 'brightness-90 hover:brightness-100'}
@@ -38,6 +40,7 @@ export default function HomeLayout() {
 
         <NavLink
           to="/education"
+          preventScrollReset
           className={({ isActive }) => `
       bg-[#FC4B43] border-b-4 border-[#24251F] rounded-xl p-4 text-2xl xl:text-4xl transition-all text-white text-center uppercase w-full md:w-auto
       ${isActive ? 'brightness-125 scale-105 -translate-y-1' : 'brightness-90 hover:brightness-100'}
@@ -49,6 +52,7 @@ export default function HomeLayout() {
         <NavLink
           to="/projects"
           prefetch="intent"
+          preventScrollReset
           className={({ isActive }) => `
       bg-[#3F976F] border-b-4 border-[#24251F] rounded-xl p-4 text-2xl xl:text-4xl transition-all text-white text-center uppercase w-full md:w-auto
       ${isActive ? 'brightness-125 scale-105 -translate-y-1' : 'brightness-90 hover:brightness-100'}
