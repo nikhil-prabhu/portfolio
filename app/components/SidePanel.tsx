@@ -61,7 +61,7 @@ export const SidePanel = ({
 		<aside
 			className="fixed left-14 top-0 z-10 flex flex-col items-center justify-center
 		border-l-4 border-r-4 border-[#3D4142] bg-[#232C2C] shadow-2xl transition-all
-		flex-row p-2 h-screen w-72 xl:w-[512px] flex-col justify-start gap-2">
+		p-2 h-screen w-72 xl:w-[512px] gap-2">
 			<div className="flex flex-col items-center justify-center w-full bg-[#10181A] border-4 border-[#10181A] rounded-xl gap-1">
 				<div className="flex flex-col bg-[#434343] border-b-2 border-[#252A2B] rounded-xl text-center text-4xl xl:text-6xl w-full">
 					<span>{title}</span>
@@ -207,7 +207,7 @@ export const SidePanel = ({
 				</div>
 			</div>
 
-			<div className="absolute fixed bottom-0">
+			<div className="absolute bottom-0">
 				<a href="https://www.playbalatro.com/" target="_blank" rel="noopener noreferrer" className="text-sm xl:text-lg">Design inspiration: Balatro, by LocalThunk</a>
 			</div>
 		</aside>

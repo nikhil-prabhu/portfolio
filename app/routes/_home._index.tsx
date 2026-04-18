@@ -113,7 +113,7 @@ function SkillTag({ icon: Icon, color, label, description }: {
 						{...getFloatingProps()}
 						className="pointer-events-none normal-case tracking-normal"
 					>
-						<div className="flex flex-col bg-[#414143] border-4 border-[#D2D6DA] p-2 rounded-xl shadow-2xl w-[256px] gap-1 border-b-[6px] border-[#918A93]">
+						<div className="flex flex-col bg-[#414143] border-4 border-[#D2D6DA] p-2 rounded-xl shadow-2xl w-[256px] gap-1 border-b-[6px]">
 							<h3 className="text-xl xl:text-2xl text-center text-white">
 								{label}
 							</h3>
