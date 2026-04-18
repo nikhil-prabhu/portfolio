@@ -8,7 +8,9 @@ import {
 	shift,
 	useHover,
 	useInteractions,
-	FloatingPortal
+	FloatingPortal,
+	useClick,
+	useDismiss
 } from "@floating-ui/react";
 import { IconType } from "react-icons";
 import { DiJava } from "react-icons/di";
@@ -73,29 +75,38 @@ function SkillTag({ icon: Icon, color, label, description }: {
 		strategy: "fixed",
 		middleware: [
 			offset(16),
-			flip({
-				fallbackPlacements: ["top", "bottom", "right"],
-			}),
+			flip({ fallbackPlacements: ["top", "bottom", "right"] }),
 			shift({ padding: 20 }),
 		],
 	});
 
-	const hover = useHover(context, {
-		delay: { open: 0, close: 0 },
-	});
-	const { getReferenceProps, getFloatingProps } = useInteractions([hover]);
+	const hover = useHover(context, { delay: { open: 0, close: 0 } });
+	const click = useClick(context);
+	const dismiss = useDismiss(context);
+
+	const { getReferenceProps, getFloatingProps } = useInteractions([
+		hover,
+		click,
+		dismiss
+	]);
 
 	return (
 		<>
 			<div
 				ref={refs.setReference}
 				{...getReferenceProps()}
-				className="w-fit h-fit shrink-0"
+				className="w-fit h-fit shrink-0 outline-none"
 			>
 				<motion.div
 					whileHover={{ scale: 1.15, rotate: 5 }}
+
+					animate={{
+						scale: isOpen ? 1.15 : 1,
+						rotate: isOpen ? 5 : 0,
+						filter: "drop-shadow(6px 6px 0px rgba(0,0,0,0.5))"
+					}}
+
 					transition={{ type: "spring", stiffness: 400, damping: 12 }}
-					animate={{ filter: "drop-shadow(6px 6px 0px rgba(0,0,0,0.5))" }}
 					className="bg-white border-4 border-[#AABDD9] rounded-xl p-2 cursor-help"
 				>
 					<Icon size={32} color={color} />
@@ -106,14 +117,13 @@ function SkillTag({ icon: Icon, color, label, description }: {
 				<FloatingPortal>
 					<div
 						ref={refs.setFloating}
-						style={{
-							...floatingStyles,
-							zIndex: 10
-						}}
+						style={{ ...floatingStyles, zIndex: 20 }}
 						{...getFloatingProps()}
-						className="pointer-events-none normal-case tracking-normal"
+						className="pointer-events-none"
 					>
-						<div className="flex flex-col bg-[#414143] border-4 border-[#D2D6DA] p-2 rounded-xl shadow-2xl w-[256px] gap-1 border-b-[6px]">
+						<div
+							className="flex flex-col bg-[#414143] border-4 border-[#D2D6DA] p-2 rounded-xl shadow-2xl w-[256px] gap-1 border-b-[6px]"
+						>
 							<h3 className="text-xl xl:text-2xl text-center text-white">
 								{label}
 							</h3>
