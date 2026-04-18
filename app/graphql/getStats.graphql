@@ -1,0 +1,10 @@
+query GetStats($username: String!) {
+  user(login: $username) {
+    repositories(first: 100, ownerAffiliations: OWNER) {
+      totalCount
+    }
+    followers {
+      totalCount
+    }
+  }
+}

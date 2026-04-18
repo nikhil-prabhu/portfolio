@@ -4,6 +4,7 @@ import {
     Outlet,
     Scripts,
     ScrollRestoration,
+    useLoaderData,
 } from "@remix-run/react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -13,9 +14,11 @@ import { VaporwaveBackground } from "~/components/VaporwaveBackground";
 import faviconGif from "/favicon.gif";
 import Profile from "/profile.png";
 import Background from "/bg.jpg";
-import { LinksFunction } from "@remix-run/cloudflare";
+import { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { SidePanel } from "./components/SidePanel";
 import { useEffect, useState } from "react";
+import { getStats } from "./services/github.server";
+import { GitHubStats } from "./types/github";
 
 export const links: LinksFunction = () => [
     {
@@ -24,6 +27,14 @@ export const links: LinksFunction = () => [
         type: "image/gif",
     },
 ]
+
+export const loader = async ({ context }: LoaderFunctionArgs) => {
+    const statsPromise = getStats(
+        context.cloudflare.env.GITHUB_USER,
+        context.cloudflare.env.GITHUB_TOKEN,
+    );
+    return { stats: statsPromise };
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
     return (
@@ -47,6 +58,8 @@ export default function App() {
     const [isShaderEnabled, setIsShaderEnabled] = useState(true);
     const [isCrtEnabled, setIsCrtEnabled] = useState(true);
     const [isHydrated, setIsHydrated] = useState(false);
+    const { stats } = useLoaderData<typeof loader>();
+    const [data, setData] = useState<GitHubStats | null>(null);
 
     useEffect(() => {
         setIsHydrated(true);
@@ -56,6 +69,10 @@ export default function App() {
             setIsCrtEnabled(false);
         }
     }, []);
+
+    useEffect(() => {
+        stats.then((resolved) => setData(resolved));
+    }, [stats]);
 
     return (
         <div className="relative min-h-screen w-full">
@@ -102,6 +119,8 @@ export default function App() {
                 name="Nikhil Prabhu"
                 title="The Engineer"
                 chipImage={Profile}
+                gitHubFollowers={data?.followers.totalCount || 0}
+                gitHubRepos={data?.repositories.totalCount || 0}
                 gitHubUrl={resources.github.url}
                 steamUrl={resources.steam.url}
                 instagramUrl={resources.instagram.url}

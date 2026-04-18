@@ -16,3 +16,16 @@ export interface GitHubRepository {
 	licenseInfo: GitHubLicense | null;
 	primaryLanguage: GitHubLanguage | null;
 }
+
+export interface GitHubRepositories {
+	totalCount: number;
+}
+
+export interface GitHubFollowers {
+	totalCount: number;
+}
+
+export interface GitHubStats {
+	repositories: GitHubRepositories;
+	followers: GitHubFollowers;
+}

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, TargetAndTransition } from "framer-motion";
 import { useState } from "react";
 import { FaEnvelope, FaGithub, FaInstagram, FaLinkedin, FaSteam } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
@@ -9,6 +9,8 @@ type SidePanelProps = {
 	name: string;
 	title: string;
 	location: string;
+	gitHubRepos: number;
+	gitHubFollowers: number;
 	gitHubUrl: string;
 	linkedInUrl: string;
 	linkedInId: string;
@@ -22,12 +24,42 @@ type SidePanelProps = {
 	toggleCrt: () => void;
 };
 
-export const SidePanel = ({ chipImage, name, title, location, gitHubUrl, linkedInUrl, linkedInId, emailUrl, matrixUrl, steamUrl, instagramUrl, isShaderEnabled, isCrtEnabled, toggleShader, toggleCrt }: SidePanelProps) => {
+export const SidePanel = ({
+	chipImage,
+	name,
+	title,
+	location,
+	gitHubRepos,
+	gitHubFollowers,
+	gitHubUrl,
+	linkedInUrl,
+	linkedInId,
+	emailUrl,
+	matrixUrl,
+	steamUrl,
+	instagramUrl,
+	isShaderEnabled,
+	isCrtEnabled,
+	toggleShader,
+	toggleCrt }: SidePanelProps) => {
 	const [isDragging, setIsDragging] = useState(false);
+
+	const getPopAnimation = (val: number): TargetAndTransition => {
+		if (val === 0) return { scale: 1 };
+
+		return {
+			scale: [1, 1.2, 0.95, 1],
+			transition: {
+				duration: 0.4,
+				times: [0, 0.2, 0.5, 1],
+				ease: "easeOut"
+			}
+		};
+	};
 
 	return (
 		<aside
-			className="fixed left-14 top-0 z-40 flex flex-col items-center justify-center
+			className="fixed left-14 top-0 z-10 flex flex-col items-center justify-center
 		border-l-4 border-r-4 border-[#3D4142] bg-[#232C2C] shadow-2xl transition-all
 		flex-row p-2 h-screen w-72 xl:w-[512px] flex-col justify-start gap-2">
 			<div className="flex flex-col items-center justify-center w-full bg-[#10181A] border-4 border-[#10181A] rounded-xl gap-1">
@@ -92,19 +124,27 @@ export const SidePanel = ({ chipImage, name, title, location, gitHubUrl, linkedI
 				</div>
 			</div>
 
-			<div className="flex flex-col items-center justify-center bg-[#1A2527] w-full rounded-xl border-b-4 border-[#131A1C] p-4">
-				<span className="m-6"></span>
+			<div className="flex flex-col items-center justify-center bg-[#1A2527] w-full rounded-xl border-b-4 border-[#131A1C] p-4 gap-4">
+				<span className="text-2xl xl:text-4xl">GitHub Repos &amp; Followers</span>
 
-				<div className="flex flex-row items-center justify-center gap-2 w-full">
-					<div className="bg-[#0F8FFA] border-b-4 border-[#10539A] rounded-xl text-right w-full p-2 text-4xl xl:text-6xl">
-						<span>0</span>
-					</div>
+				<div className="flex flex-row items-center justify-center gap-2 w-full px-2">
+					<motion.div
+						key={`repos-${gitHubRepos}`}
+						animate={getPopAnimation(gitHubRepos)}
+						className="bg-[#0F8FFA] border-b-4 border-[#10539A] rounded-xl text-right w-full p-2 text-4xl xl:text-6xl"
+					>
+						<span>{gitHubRepos}</span>
+					</motion.div>
 
 					<span className="text-4xl xl:text-6xl text-[#F64A40] w-[20%] xl:w-[25%] text-center">X</span>
 
-					<div className="bg-[#FC4B43] border-b-4 border-[#963332] rounded-xl text-left w-full p-2 text-4xl xl:text-6xl">
-						<span>0</span>
-					</div>
+					<motion.div
+						key={`followers-${gitHubFollowers}`}
+						animate={getPopAnimation(gitHubFollowers)}
+						className="bg-[#FC4B43] border-b-4 border-[#963332] rounded-xl text-left w-full p-2 text-4xl xl:text-6xl"
+					>
+						<span>{gitHubFollowers}</span>
+					</motion.div>
 				</div>
 			</div>
 
