@@ -13,14 +13,14 @@
   @apply bg-black dark:bg-white text-white dark:text-black;
 }
 
-* {
-  @apply text-shadow-game;
-}
-
 html,
 body {
-  @apply text-lg text-white;
+  @apply text-lg text-white text-shadow-game;
   font-family: "m6x11plus", monospace;
+}
+
+button {
+  @apply text-shadow-game;
 }
 
 @layer components {
