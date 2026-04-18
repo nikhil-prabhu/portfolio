@@ -1,7 +1,7 @@
 import { motion, TargetAndTransition } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useFetcher } from "@remix-run/react";
-import { FaEnvelope, FaGithub, FaInstagram, FaLinkedin, FaSteam } from "react-icons/fa";
+import { FaEnvelope, FaGithub, FaInstagram, FaLinkedin, FaSteam, FaChevronDown } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { SiMatrix } from "react-icons/si";
 
@@ -20,6 +20,26 @@ type SidePanelProps = {
 	steamUrl: string; instagramUrl: string; isShaderEnabled: boolean; isCrtEnabled: boolean;
 	toggleShader: () => void; toggleCrt: () => void;
 };
+
+function ScrollIndicator() {
+	return (
+		<motion.div
+			initial={{ y: -5 }}
+			animate={{
+				y: [0, 8, 0]
+			}}
+			transition={{
+				duration: 2.5,
+				repeat: Infinity,
+				ease: "easeInOut"
+			}}
+			className="md:hidden flex flex-col items-center gap-1 mb-4"
+		>
+			<span className="text-sm uppercase">Scroll for More</span>
+			<FaChevronDown className="text-lg" />
+		</motion.div>
+	);
+}
 
 function Profile({ chipImage, name, title, gitHubUrl }: ProfileProps) {
 	const [isDragging, setIsDragging] = useState(false);
@@ -125,22 +145,26 @@ export function SidePanel(props: SidePanelProps) {
 	return (
 		<aside
 			className="
-        /* SHARED STYLES */
-        flex flex-col items-center border-[#3D4142] bg-[#232C2C] shadow-2xl transition-all gap-2 p-2 z-30
-        
-        /* MOBILE STYLES (Landing Page Mode) */
-        relative w-[calc(100%-1rem)] m-2 rounded-xl border-4 h-fit justify-start
-        
-        /* DESKTOP STYLES (Side Panel Mode) */
-        md:fixed md:left-14 md:top-0 md:h-screen md:w-72 md:xl:w-[512px] md:m-0 md:rounded-none md:border-y-0 md:border-l-4 md:border-r-4 md:justify-center
-    "
+				/* SHARED STYLES */
+				flex flex-col items-center border-[#3D4142] bg-[#232C2C] shadow-2xl transition-all gap-2 p-2 z-30
+				
+				/* MOBILE STYLES (Landing Page Mode) */
+				relative w-[calc(100%-1rem)] m-2 rounded-xl border-4 h-fit justify-start
+				
+				/* DESKTOP STYLES (Side Panel Mode) */
+				md:fixed md:left-14 md:top-0 md:h-screen md:w-72 md:xl:w-[512px] md:m-0 md:rounded-none md:border-y-0 md:border-l-4 md:border-r-4 md:justify-center
+			"
 		>
 			<Profile chipImage={props.chipImage} name={props.name} title={props.title} gitHubUrl={props.gitHubUrl} />
 			<Location location={props.location} />
 			<GitHubStats repos={repos} followers={followers} />
 			<SettingsAndSocial {...props} />
-			<div className="md:absolute md:bottom-2 mt-auto pb-2">
-				<a href="https://www.playbalatro.com/" target="_blank" rel="noopener noreferrer" className="text-sm xl:text-lg opacity-50 hover:opacity-100 transition-opacity">Design inspiration: Balatro, by LocalThunk</a>
+
+			<div className="flex flex-col items-center md:absolute md:bottom-2 mt-auto pb-2 w-full">
+				<ScrollIndicator />
+				<a href="https://www.playbalatro.com/" target="_blank" rel="noopener noreferrer" className="text-sm xl:text-lg opacity-50 hover:opacity-100 transition-opacity">
+					Design inspiration: Balatro, by LocalThunk
+				</a>
 			</div>
 		</aside>
 	);
