@@ -13,6 +13,10 @@
   @apply bg-black dark:bg-white text-white dark:text-black;
 }
 
+* {
+  @apply text-shadow-game;
+}
+
 html,
 body {
   @apply text-lg text-white;

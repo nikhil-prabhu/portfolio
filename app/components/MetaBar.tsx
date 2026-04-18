@@ -14,7 +14,7 @@ export const MetaPill = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const MetaTitle = ({ children }: { children: React.ReactNode }) => (
-	<span className="flex-1 min-w-0 text-center [text-shadow:2px_2px_0px_rgba(112,120,128,1)] px-2">
+	<span className="flex-1 min-w-0 text-center px-2">
 		{children}
 	</span>
 );
