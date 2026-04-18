@@ -25,7 +25,7 @@ button {
 
 @layer components {
   .crt-screen {
-    @apply pointer-events-none fixed inset-0 z-50;
+    @apply pointer-events-none fixed inset-0 z-[9999];
 
     background: linear-gradient(rgba(255, 255, 255, 0.02) 50%,
         rgba(0, 0, 0, 0.18) 50%),

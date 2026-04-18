@@ -1,5 +1,15 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import {
+	useFloating,
+	autoUpdate,
+	offset,
+	flip,
+	shift,
+	useHover,
+	useInteractions,
+	FloatingPortal
+} from "@floating-ui/react";
 import { IconType } from "react-icons";
 import { DiJava } from "react-icons/di";
 import { FaAws, FaGitAlt, FaGithub, FaPython, FaRust } from "react-icons/fa";
@@ -47,43 +57,74 @@ export default function AboutIndex() {
 	);
 }
 
-function SkillTag({ icon, color, label, description }: { icon: IconType, color: string, label: string, description: string }) {
-	const [isHovered, setIsHovered] = useState(false);
+function SkillTag({ icon: Icon, color, label, description }: {
+	icon: IconType,
+	color: string,
+	label: string,
+	description: string
+}) {
+	const [isOpen, setIsOpen] = useState(false);
+
+	const { refs, floatingStyles, context } = useFloating({
+		open: isOpen,
+		onOpenChange: setIsOpen,
+		placement: "left",
+		whileElementsMounted: autoUpdate,
+		strategy: "fixed",
+		middleware: [
+			offset(16),
+			flip({
+				fallbackPlacements: ["top", "bottom", "right"],
+			}),
+			shift({ padding: 20 }),
+		],
+	});
+
+	const hover = useHover(context, {
+		delay: { open: 0, close: 0 },
+	});
+	const { getReferenceProps, getFloatingProps } = useInteractions([hover]);
 
 	return (
-		<div
-			className="relative"
-			onMouseEnter={() => setIsHovered(true)}
-			onMouseLeave={() => setIsHovered(false)}
-		>
-			<motion.div
-				whileHover={{ scale: 1.15, rotate: 5 }}
-				transition={{
-					type: "spring",
-					stiffness: 400,
-					damping: 12,
-				}}
-				animate={{
-					filter: "drop-shadow(6px 6px 0px rgba(0,0,0,0.5))"
-				}}
-				className="bg-white border-4 border-[#AABDD9] rounded-xl p-2 cursor-help w-full"
+		<>
+			<div
+				ref={refs.setReference}
+				{...getReferenceProps()}
+				className="w-fit h-fit shrink-0"
 			>
-				{icon({ size: 32, color: color })}
-			</motion.div>
+				<motion.div
+					whileHover={{ scale: 1.15, rotate: 5 }}
+					transition={{ type: "spring", stiffness: 400, damping: 12 }}
+					animate={{ filter: "drop-shadow(6px 6px 0px rgba(0,0,0,0.5))" }}
+					className="bg-white border-4 border-[#AABDD9] rounded-xl p-2 cursor-help"
+				>
+					<Icon size={32} color={color} />
+				</motion.div>
+			</div>
 
-			{isHovered && (
-				<div className="absolute right-full top-1/2 z-50 mr-4 -translate-y-1/2 pointer-events-none border-b-4 border-[#918A93] rounded-xl w-[256px] normal-case tracking-normal">
-					<div className="flex flex-col bg-[#414143] border-4 border-[#D2D6DA] p-2 rounded-xl shadow-2xl w-full gap-1">
-						<h3 className="text-xl xl:text-2xl text-center">
-							{label}
-						</h3>
-						<p className="text-lg xl:text-xl text-[#414143] bg-white border-b-4 border-[#918A93] rounded-xl p-2 text-shadow-none">
-							{description}
-						</p>
+			{isOpen && (
+				<FloatingPortal>
+					<div
+						ref={refs.setFloating}
+						style={{
+							...floatingStyles,
+							zIndex: 10
+						}}
+						{...getFloatingProps()}
+						className="pointer-events-none normal-case tracking-normal"
+					>
+						<div className="flex flex-col bg-[#414143] border-4 border-[#D2D6DA] p-2 rounded-xl shadow-2xl w-[256px] gap-1 border-b-[6px] border-[#918A93]">
+							<h3 className="text-xl xl:text-2xl text-center text-white">
+								{label}
+							</h3>
+							<p className="text-lg xl:text-xl text-[#414143] bg-white border-b-4 border-[#918A93] rounded-xl p-2 text-shadow-none">
+								{description}
+							</p>
+						</div>
 					</div>
-				</div>
+				</FloatingPortal>
 			)}
-		</div>
+		</>
 	);
 }
 
