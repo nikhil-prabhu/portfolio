@@ -17,7 +17,7 @@ import Profile from "/profile.png";
 import Background from "/bg.jpg";
 import { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { SidePanel } from "./components/SidePanel";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, startTransition } from "react";
 import { getStats } from "./services/github.server";
 
 export const links: LinksFunction = () => [
@@ -66,12 +66,14 @@ export default function App() {
     const { stats } = useLoaderData<typeof loader>();
 
     useEffect(() => {
-        setIsHydrated(true);
-        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-        if (motionQuery.matches) {
-            setIsShaderEnabled(false);
-            setIsCrtEnabled(false);
-        }
+        startTransition(() => {
+            setIsHydrated(true);
+            const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (motionQuery.matches) {
+                setIsShaderEnabled(false);
+                setIsCrtEnabled(false);
+            }
+        });
     }, []);
 
     return (
@@ -131,31 +133,30 @@ export default function App() {
                 />
             }>
                 <Await resolve={stats}>
-                    {(resolvedStats) => {
-                        return (
-                            <SidePanel
-                                name="Nikhil Prabhu"
-                                title="The Engineer"
-                                chipImage={Profile}
-                                gitHubFollowers={resolvedStats.followers.totalCount || 0}
-                                gitHubRepos={resolvedStats.repositories.totalCount || 0}
-                                gitHubUrl={resources.github.url}
-                                steamUrl={resources.steam.url}
-                                instagramUrl={resources.instagram.url}
-                                linkedInUrl={resources.linkedin.url}
-                                linkedInId={resources.linkedin.id}
-                                emailUrl={resources.email.url}
-                                matrixUrl={resources.matrix.url}
-                                location={resources.location}
-                                isShaderEnabled={isShaderEnabled}
-                                isCrtEnabled={isCrtEnabled}
-                                toggleShader={() => setIsShaderEnabled(prev => !prev)}
-                                toggleCrt={() => setIsCrtEnabled(prev => !prev)}
-                            />
-                        )
-                    }}
+                    {(resolvedStats) => (
+                        <SidePanel
+                            name="Nikhil Prabhu"
+                            title="The Engineer"
+                            chipImage={Profile}
+                            gitHubFollowers={resolvedStats.followers.totalCount || 0}
+                            gitHubRepos={resolvedStats.repositories.totalCount || 0}
+                            gitHubUrl={resources.github.url}
+                            steamUrl={resources.steam.url}
+                            instagramUrl={resources.instagram.url}
+                            linkedInUrl={resources.linkedin.url}
+                            linkedInId={resources.linkedin.id}
+                            emailUrl={resources.email.url}
+                            matrixUrl={resources.matrix.url}
+                            location={resources.location}
+                            isShaderEnabled={isShaderEnabled}
+                            isCrtEnabled={isCrtEnabled}
+                            toggleShader={() => setIsShaderEnabled(prev => !prev)}
+                            toggleCrt={() => setIsCrtEnabled(prev => !prev)}
+                        />
+                    )}
                 </Await>
             </Suspense>
+
 
             <main className="relative z-10 pt-32 md:pl-80 md:pt-0">
                 <div className="p-2 md:p-8">
@@ -204,68 +205,4 @@ const resources = {
         url: "https://instagram.com/_nikhilprabhu",
     },
     location: "Coimbatore, India",
-    experience: [
-        {
-            company: "EGYM AG",
-            roles: [
-                {
-                    title: "Systems Engineer",
-                    location: "Berlin, Germany",
-                    startDate: "Jun 2025",
-                    endDate: "Nov 2025",
-                    items: [
-                        "Built Rust and Go-based internal tooling to improve cloud observability workflows across Kubernetes workloads.",
-                        "Automated operational processes reducing manual intervention and accelerating developer workflows.",
-                        "Partnered with product engineering teams to improve performance and reliability of production services.",
-                    ],
-                },
-            ],
-        },
-        {
-            company: "SAP Labs",
-            roles: [
-                {
-                    title: "Developer / DevOps Engineer",
-                    location: "Bangalore, India",
-                    startDate: "Jun 2020",
-                    endDate: "May 2025",
-                    items: [
-                        "Designed and automated cloud infrastructure monitoring solutions and reusable tooling (Python/Go).",
-                        "Developed Go-based system services to automate security and compliance enforcement across distributed cloud environments.",
-                        "Built a custom validation framework to assess infrastructure health and state.",
-                        "Created shared utility libraries/APIs/SDKs to reduce technical debt across platforms.",
-                        "Performed code reviews to ensure code quality and best-practice adherence.",
-                        "Mentored junior engineers and conducted annual technical training sessions to improve team-wide Go adoption and engineering practices.",
-                        "Drove team migration from Python to Go.",
-                    ],
-                },
-                {
-                    title: "Fullstack Developer",
-                    location: "Bangalore, India",
-                    startDate: "Aug 2019",
-                    endDate: "May 2020",
-                    items: [
-                        "Automated network access control policy changes and monitoring using Python.",
-                        "Built robotic process automation workflows to streamline user onboarding.",
-                    ],
-                },
-            ],
-        },
-    ],
-    education: [
-        {
-            institution: "Birla Institute of Technology and Science, Pilani",
-            location: "Pilani, India",
-            degree: "Master's - MTech (Software Engineering)",
-            startDate: "Aug 2019",
-            endDate: "Jun 2023",
-        },
-        {
-            institution: "Bharatiar University",
-            location: "Coimbatore, India",
-            degree: "Bachelor's - BCA (Computer Applications)",
-            startDate: "Jun 2016",
-            endDate: "May 2019",
-        }
-    ],
 };
