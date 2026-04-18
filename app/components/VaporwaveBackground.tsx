@@ -1,7 +1,7 @@
 // Inspired by the background shaders in Balatro by LocalThunk.
 // Credits for the shader code: https://www.shadertoy.com/view/w3lGzH
 // NOTE: The shader code has been slightly modified/customized to fit my needs, but the core logic and visual style remain intact.
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import vertexShader from '../shaders/vertex.glsl?raw';
 import fragmentShader from '../shaders/fragment.glsl?raw';
 
