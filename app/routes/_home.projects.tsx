@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card from "~/components/Card";
-import { type LoaderFunctionArgs } from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
-import { getPinnedRepositories } from "~/services/github.server";
+import { useFetcher } from "@remix-run/react";
 import { GitHubRepository } from "~/types/github";
 import { FaCodeFork } from "react-icons/fa6";
 import { IconType } from "react-icons";
@@ -12,22 +10,6 @@ import { FaBalanceScale, FaCode, FaStar } from "react-icons/fa";
 import SectionBox from "~/components/SectionBox";
 import Container from "~/components/Container";
 import { MetaBar, MetaDataBlock, MetaInfo, MetaPill, MetaTitle } from "~/components/MetaBar";
-
-export const loader = async ({ context }: LoaderFunctionArgs) => {
-	try {
-		const reposPromise = getPinnedRepositories(
-			context.cloudflare.env.GITHUB_USER,
-			context.cloudflare.env.GITHUB_TOKEN,
-		).then(resolved => {
-			console.log(">>> [SERVER] Fetched GitHub pinned repos:", resolved);
-			return resolved;
-		});
-		return { repos: reposPromise };
-	} catch (error) {
-		console.error("GitHub API Error:", error);
-		throw new Response("GitHub Auth Failed", { status: 500 });
-	}
-};
 
 const getLanguageIcon = (langName: string | undefined): IconType => {
 	switch (langName?.toLowerCase()) {
@@ -45,14 +27,16 @@ const getLanguageIcon = (langName: string | undefined): IconType => {
 };
 
 export default function ProjectsView() {
-	const { repos } = useLoaderData<typeof loader>();
-	const [data, setData] = useState<GitHubRepository[] | null>(null);
+	const fetcher = useFetcher<GitHubRepository[]>();
 	const [selectedIndex, setSelectedIndex] = useState(0);
 
 	useEffect(() => {
-		repos.then((resolved) => setData(resolved));
-	}, [repos]);
+		if (fetcher.state === "idle" && !fetcher.data) {
+			fetcher.load("/api/github-pinned");
+		}
+	}, [fetcher]);
 
+	const data = fetcher.data ?? null;
 	const activeRepo = data ? data[selectedIndex] : null;
 
 	return (
@@ -67,7 +51,7 @@ export default function ProjectsView() {
 					<Container className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-8 gap-x-4 justify-items-center p-4">
 						{[...Array(6)].map((_, index) => {
 							const repo = data?.[index];
-							const isLoading = !data || !repo;
+							const isLoading = !data; // Loading the whole set
 							const LangIcon = getLanguageIcon(repo?.primaryLanguage?.name);
 
 							return (
@@ -77,7 +61,7 @@ export default function ProjectsView() {
 									faceIcon={repo ? <LangIcon size={32} color={repo.primaryLanguage?.color || "#fff"} /> : undefined}
 									label={repo?.name}
 									isLoading={isLoading}
-									isSelected={data ? data && selectedIndex === index : false}
+									isSelected={data ? selectedIndex === index : false}
 									onClick={() => setSelectedIndex(index)}
 								/>
 							);
@@ -100,19 +84,13 @@ export default function ProjectsView() {
 							<div className="flex flex-col gap-8">
 								<MetaBar>
 									<MetaPill>{activeRepo.primaryLanguage?.name || "Code"}</MetaPill>
-
 									<MetaTitle>{activeRepo.name}</MetaTitle>
-
 									<MetaDataBlock
 										leftLabel={<span className="flex items-center gap-1"><FaStar /> {activeRepo.stargazerCount}</span>}
 										rightLabel={<span className="flex items-center gap-1"><FaCodeFork /> {activeRepo.forkCount}</span>}
 										separator="X"
 									/>
-
-									<MetaInfo
-										icon={FaBalanceScale}
-										label={activeRepo.licenseInfo?.spdxId || "No License"}
-									/>
+									<MetaInfo icon={FaBalanceScale} label={activeRepo.licenseInfo?.spdxId || "No License"} />
 								</MetaBar>
 
 								<Container className="p-4 text-lg xl:text-xl">
