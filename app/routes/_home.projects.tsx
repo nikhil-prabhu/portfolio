@@ -14,11 +14,16 @@ import Container from "~/components/Container";
 import { MetaBar, MetaDataBlock, MetaInfo, MetaPill, MetaTitle } from "~/components/MetaBar";
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
-	const reposPromise = getPinnedRepositories(
-		context.cloudflare.env.GITHUB_USER,
-		context.cloudflare.env.GITHUB_TOKEN,
-	);
-	return { repos: reposPromise };
+	try {
+		const reposPromise = getPinnedRepositories(
+			context.cloudflare.env.GITHUB_USER,
+			context.cloudflare.env.GITHUB_TOKEN,
+		);
+		return { repos: reposPromise };
+	} catch (error) {
+		console.error("GitHub API Error:", error);
+		throw new Response("GitHub Auth Failed", { status: 500 });
+	}
 };
 
 const getLanguageIcon = (langName: string | undefined): IconType => {

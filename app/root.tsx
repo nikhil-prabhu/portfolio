@@ -29,11 +29,16 @@ export const links: LinksFunction = () => [
 ]
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
-    const statsPromise = getStats(
-        context.cloudflare.env.GITHUB_USER,
-        context.cloudflare.env.GITHUB_TOKEN,
-    );
-    return { stats: statsPromise };
+    try {
+        const statsPromise = getStats(
+            context.cloudflare.env.GITHUB_USER,
+            context.cloudflare.env.GITHUB_TOKEN,
+        );
+        return { stats: statsPromise };
+    } catch (error) {
+        console.error("GitHub API Error:", error);
+        throw new Response("GitHub Auth Failed", { status: 500 });
+    }
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
