@@ -123,7 +123,18 @@ export function SidePanel(props: SidePanelProps) {
 	const followers = fetcher.data?.followers?.totalCount ?? 0;
 
 	return (
-		<aside className="flex flex-col items-center border-[#3D4142] bg-[#232C2C] shadow-2xl transition-all gap-2 p-2 z-30 relative w-[calc(100%-1rem)] m-2 rounded-xl border-4 min-h-[calc(100vh-1rem)] justify-center md:fixed md:left-14 md:top-0 md:h-screen md:w-72 md:xl:w-[512px] md:m-0 md:rounded-none md:border-y-0 md:border-l-4 md:border-r-4 md:justify-center">
+		<aside
+			className="
+        /* SHARED STYLES */
+        flex flex-col items-center border-[#3D4142] bg-[#232C2C] shadow-2xl transition-all gap-2 p-2 z-30
+        
+        /* MOBILE STYLES (Landing Page Mode) */
+        relative w-[calc(100%-1rem)] m-2 rounded-xl border-4 h-fit justify-start
+        
+        /* DESKTOP STYLES (Side Panel Mode) */
+        md:fixed md:left-14 md:top-0 md:h-screen md:w-72 md:xl:w-[512px] md:m-0 md:rounded-none md:border-y-0 md:border-l-4 md:border-r-4 md:justify-center
+    "
+		>
 			<Profile chipImage={props.chipImage} name={props.name} title={props.title} gitHubUrl={props.gitHubUrl} />
 			<Location location={props.location} />
 			<GitHubStats repos={repos} followers={followers} />

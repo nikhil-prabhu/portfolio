@@ -101,7 +101,7 @@ export default function App() {
         <div className="relative min-h-screen w-full">
             <BackgroundProvider isShaderEnabled={isShaderEnabled} />
             <SidePanel {...commonProps} />
-            <main className="relative z-10 pt-32 md:pl-80 xl:pl-[600px] md:pt-0">
+            <main className="relative z-10 md:pl-80 xl:pl-[600px]">
                 <div className="p-2 md:p-8">
                     <Outlet />
                 </div>
