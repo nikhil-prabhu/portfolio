@@ -19,7 +19,6 @@ import { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { SidePanel } from "./components/SidePanel";
 import { Suspense, useEffect, useState } from "react";
 import { getStats } from "./services/github.server";
-import { GitHubStats } from "./types/github";
 
 export const links: LinksFunction = () => [
     {
@@ -65,7 +64,6 @@ export default function App() {
     const [isCrtEnabled, setIsCrtEnabled] = useState(true);
     const [isHydrated, setIsHydrated] = useState(false);
     const { stats } = useLoaderData<typeof loader>();
-    const [data, setData] = useState<GitHubStats | null>(null);
 
     useEffect(() => {
         setIsHydrated(true);
@@ -75,10 +73,6 @@ export default function App() {
             setIsCrtEnabled(false);
         }
     }, []);
-
-    useEffect(() => {
-        stats.then((resolved) => setData(resolved));
-    }, [stats]);
 
     return (
         <div className="relative min-h-screen w-full">
