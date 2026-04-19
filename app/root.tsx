@@ -13,7 +13,7 @@ import { LinksFunction } from "@remix-run/cloudflare";
 import { SidePanel } from "./components/SidePanel";
 import { useEffect, useState } from "react";
 import { VaporwaveBackground } from "~/components/VaporwaveBackground";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
 
 import Background from "/bg.jpg"
 
@@ -74,6 +74,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
     const [isShaderEnabled, setIsShaderEnabled] = useState(true);
     const [isCrtEnabled, setIsCrtEnabled] = useState(true);
+    const controls = useAnimation();
 
     useEffect(() => {
         const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -82,6 +83,25 @@ export default function App() {
             setIsCrtEnabled(false);
         }
     }, []);
+
+    useEffect(() => {
+        const handleGlobalClick = (e: MouseEvent) => {
+            if (!isShaderEnabled) return;
+
+            const target = e.target as HTMLElement;
+            if (target.closest("button") || target.closest("a")) {
+                controls.start({
+                    x: [-2, 2, -1, 1, 0],
+                    y: [1, -1, 0.5, -0.5, 0],
+                    rotate: [0.08, -0.08, 0.04, -0.04, 0],
+                    transition: { duration: 0.15, ease: "linear" }
+                });
+            }
+        };
+
+        window.addEventListener("mousedown", handleGlobalClick);
+        return () => window.removeEventListener("mousedown", handleGlobalClick);
+    }, [controls, isShaderEnabled]);
 
     const commonProps = {
         name: "Nikhil Prabhu",
@@ -102,14 +122,22 @@ export default function App() {
     };
 
     return (
-        <div className="relative min-h-screen w-full">
+        <div className="relative min-h-screen w-full overflow-hidden bg-[#10181A]">
             <BackgroundProvider isShaderEnabled={isShaderEnabled} />
-            <SidePanel {...commonProps} />
-            <main className="relative z-10 md:pl-80 xl:pl-[600px]">
-                <div className="p-2 md:p-8">
-                    <Outlet />
-                </div>
-            </main>
+
+            <motion.div
+                animate={controls}
+                className="relative z-10 w-full min-h-screen"
+            >
+                <SidePanel {...commonProps} />
+
+                <main className="pt-32 md:pl-80 xl:pl-[600px] md:pt-0">
+                    <div className="p-2 md:p-8">
+                        <Outlet />
+                    </div>
+                </main>
+            </motion.div>
+
             <CrtOverlay enabled={isCrtEnabled} />
         </div>
     );
