@@ -18,6 +18,17 @@ type SidePanelProps = {
 };
 
 function ScrollIndicator() {
+	const { isMotionEnabled } = useSettings();
+
+	if (!isMotionEnabled) {
+		return (
+			<div className="md:hidden flex flex-col items-center gap-1 mb-4">
+				<span className="text-sm uppercase">Scroll for More</span>
+				<FaChevronDown className="text-lg" />
+			</div>
+		);
+	}
+
 	return (
 		<motion.div
 			initial={{ y: -5 }}
@@ -25,7 +36,7 @@ function ScrollIndicator() {
 			transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
 			className="md:hidden flex flex-col items-center gap-1 mb-4"
 		>
-			<span className="text-[10px] uppercase">Scroll for More</span>
+			<span className="text-sm uppercase">Scroll for More</span>
 			<FaChevronDown className="text-lg" />
 		</motion.div>
 	);
