@@ -11,39 +11,52 @@ type FloatingTextProps = {
 
 export default function FloatingText({
 	children,
-	intensity = 1,
-	speed = 0.8,
+	intensity = 0.8,
+	speed = 1,
 	stagger = 0.1,
 	className = "",
 }: FloatingTextProps) {
-	const { isMotionEnabled: isShaderEnabled } = useSettings();
+	const { isMotionEnabled } = useSettings();
 
-	if (!isShaderEnabled) {
+	if (!isMotionEnabled) {
 		return <span className={className}>{children}</span>;
 	}
 
-	const characters = children.split("");
+	const words = children.split(" ");
+	let charCounter = 0;
 
 	return (
-		<span className={`flex flex-wrap justify-center items-center whitespace-pre ${className}`}>
-			{characters.map((char, index) => (
-				<motion.span
-					key={index}
-					className="inline-block"
-					animate={{
-						y: [0, -4 * intensity, 0],
-						rotate: [-2 * intensity, 2 * intensity, -2 * intensity],
-					}}
-					transition={{
-						duration: 2.5 / speed,
-						repeat: Infinity,
-						ease: "easeInOut",
-						delay: index * stagger,
-					}}
-				>
-					{char === " " ? "\u00A0" : char}
-				</motion.span>
-			))}
+		<span className={`flex flex-wrap justify-center items-center gap-x-[0.25em] ${className}`}>
+			{words.map((word, wordIndex) => {
+				const characters = word.split("");
+
+				return (
+					<span key={wordIndex} className="inline-block whitespace-nowrap">
+						{characters.map((char) => {
+							const currentIndex = charCounter++;
+							return (
+								<motion.span
+									key={currentIndex}
+									className="inline-block"
+									animate={{
+										y: [0, -4 * intensity, 0],
+										rotate: [-2 * intensity, 2 * intensity, -2 * intensity],
+									}}
+									transition={{
+										duration: 2.5 / speed,
+										repeat: Infinity,
+										ease: "easeInOut",
+										delay: currentIndex * stagger,
+									}}
+								>
+									{char}
+								</motion.span>
+							);
+						})}
+						{(() => { charCounter++; return null; })()}
+					</span>
+				);
+			})}
 		</span>
 	);
 }

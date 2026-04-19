@@ -114,7 +114,7 @@ function AppContent() {
             <BackgroundProvider />
             <motion.div animate={controls} className="relative z-10 w-full min-h-screen">
                 <SidePanel {...commonProps} />
-                <main className="pt-32 md:pl-80 xl:pl-[600px] md:pt-0">
+                <main className="md:pl-80 xl:pl-[600px]">
                     <div className="p-2 md:p-8">
                         <Outlet />
                     </div>
