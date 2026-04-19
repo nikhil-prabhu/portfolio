@@ -54,8 +54,8 @@ function Profile({ chipImage, name, title, gitHubUrl }: ProfileProps) {
 					</motion.div>
 					<div className="flex flex-col items-center justify-center w-[60%] xl:w-[65%] bg-[#1A2527] border-b-4 border-[#131A1C] rounded-xl">
 						<span className="text-sm xl:text-lg">Go check out my</span>
-						<a href={gitHubUrl} target="_blank" rel="noopener noreferrer" className="flex flex-row items-center justify-center gap-2 text-2xl"><FaGithub /> <span className="text-[#E6504A] text-xl xl:text-3xl">GitHub</span></a>
-						<div className="flex flex-row items-center justify-center gap-2"><span className="text-md xl:text-lg">Reward:</span> <span className="text-[#EAAE6C] text-xl xl:text-2xl">$$$$$</span></div>
+						<a href={gitHubUrl} target="_blank" rel="noopener noreferrer" className="flex flex-row items-center justify-center gap-2 text-2xl"><FaGithub /> <span className="text-[#E6504A] text-xl xl:text-3xl text-shadow-game">GitHub</span></a>
+						<div className="flex flex-row items-center justify-center gap-2"><span className="text-md xl:text-lg">Reward:</span> <span className="text-[#EAAE6C] text-xl xl:text-2xl text-shadow-game">$$$$$</span></div>
 					</div>
 				</div>
 			</div>

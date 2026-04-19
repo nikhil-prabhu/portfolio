@@ -11,7 +11,7 @@ export default {
     },
   },
   plugins: [
-    plugin(function ({ addUtilities, theme }) {
+    plugin(function ({ addUtilities }) {
       addUtilities({
         ".text-shadow-heavy": {
           "text-shadow": "3px 3px 0px rgba(0, 0, 0, 0.6)",
@@ -21,6 +21,12 @@ export default {
         },
         ".text-shadow-none": {
           "text-shadow": "none",
+        },
+        ".text-bloom": {
+          "text-shadow": "0 0 8px rgba(255, 255, 255, 0.5), 2px 2px 0px rgba(0, 0, 0, 0.4)",
+        },
+        ".text-bloom-heavy": {
+          "text-shadow": "0 0 12px rgba(255, 255, 255, 0.7), 3px 3px 0px rgba(0, 0, 0, 0.6)",
         },
       });
     }),
