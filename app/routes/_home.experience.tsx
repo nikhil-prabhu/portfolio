@@ -22,7 +22,7 @@ export default function ExperienceView() {
 							Experience
 						</h2>
 						<span className="text-lg xl:text-xl">
-							Click a card to learn more about my experience.
+							Click a card to learn more about my experience. (You may have to scroll down to view the details)
 						</span>
 					</section>
 

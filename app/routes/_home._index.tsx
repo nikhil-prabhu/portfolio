@@ -143,6 +143,6 @@ const resources = {
 		"I'm a Backend and Platform Engineer with 6+ years of experience building scalable backend services, developer platforms, and cloud automation using Go, Rust, and Python.",
 		"Experienced in distributed systems, cloud-native infrastructure, and reliability engineering across AWS, Azure, and GCP. Focused on improving developer productivity, system reliability, and operational scalability through automation and reusable tooling.",
 		"I'm passionate about open source, continuous learning, and sharing knowledge with the community.",
-		"My skills are listed below. Hover over the chips for more info."
+		"My skills are listed below. Hover over the tags for more info."
 	],
 }

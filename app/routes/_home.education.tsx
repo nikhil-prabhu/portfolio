@@ -22,7 +22,7 @@ export default function EducationView() {
 							Education
 						</h2>
 						<span className="text-lg xl:text-xl">
-							Click a card to learn more about my education.
+							Click a card to learn more about my education. (You may have to scroll down to view the details)
 						</span>
 					</section>
 

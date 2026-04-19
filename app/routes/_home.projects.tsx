@@ -45,7 +45,7 @@ export default function ProjectsView() {
 				<div className="flex flex-col gap-8">
 					<section>
 						<h2 className="text-2xl xl:text-4xl">Projects</h2>
-						<span className="text-lg xl:text-xl">Click a card to learn more about my projects.</span>
+						<span className="text-lg xl:text-xl">Click a card to learn more about my projects. (You may have to scroll down to view the details)</span>
 					</section>
 
 					<Container className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-8 gap-x-4 justify-items-center p-4">
