@@ -4,38 +4,28 @@ import { useFetcher } from "@remix-run/react";
 import { FaEnvelope, FaGithub, FaInstagram, FaLinkedin, FaSteam, FaChevronDown } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { SiMatrix } from "react-icons/si";
+import FloatingText from "./FloatingText";
+import { useSettings } from "~/context/SettingsContext";
 
 type ProfileProps = { chipImage: string; name: string; title: string; gitHubUrl: string; }
 type LocationProps = { location: string; }
 type GitHubStatsProps = { repos: number; followers: number; }
-type SettingsAndSocialProps = {
-	emailUrl: string; matrixUrl: string; linkedInUrl: string; linkedInId: string;
-	steamUrl: string; instagramUrl: string; isShaderEnabled: boolean; isCrtEnabled: boolean;
-	toggleShader: () => void; toggleCrt: () => void;
-}
 
 type SidePanelProps = {
 	chipImage: string; name: string; title: string; location: string; gitHubUrl: string;
 	linkedInUrl: string; linkedInId: string; emailUrl: string; matrixUrl: string;
-	steamUrl: string; instagramUrl: string; isShaderEnabled: boolean; isCrtEnabled: boolean;
-	toggleShader: () => void; toggleCrt: () => void;
+	steamUrl: string; instagramUrl: string;
 };
 
 function ScrollIndicator() {
 	return (
 		<motion.div
 			initial={{ y: -5 }}
-			animate={{
-				y: [0, 8, 0]
-			}}
-			transition={{
-				duration: 2.5,
-				repeat: Infinity,
-				ease: "easeInOut"
-			}}
+			animate={{ y: [0, 8, 0] }}
+			transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
 			className="md:hidden flex flex-col items-center gap-1 mb-4"
 		>
-			<span className="text-sm uppercase">Scroll for More</span>
+			<span className="text-[10px] uppercase">Scroll for More</span>
 			<FaChevronDown className="text-lg" />
 		</motion.div>
 	);
@@ -45,7 +35,9 @@ function Profile({ chipImage, name, title, gitHubUrl }: ProfileProps) {
 	const [isDragging, setIsDragging] = useState(false);
 	return (
 		<div className="flex flex-col items-center justify-center w-full bg-[#10181A] border-4 border-[#10181A] rounded-xl gap-1">
-			<div className="flex flex-col bg-[#434343] border-b-2 border-[#252A2B] rounded-xl text-center text-2xl xl:text-4xl w-full"><span>{title}</span></div>
+			<div className="flex flex-col bg-[#434343] border-b-2 border-[#252A2B] rounded-xl justify-center text-2xl xl:text-4xl w-full py-1">
+				<FloatingText className="text-center">{title}</FloatingText>
+			</div>
 			<div className="flex flex-col items-center justify-center bg-[#303638] border-b-4 border-b-[#131A1C] rounded-xl w-full">
 				<span className="text-xl xl:text-2xl m-1">{name}</span>
 				<div className="flex flex-row items-center justify-center gap-4 w-full m-2">
@@ -79,23 +71,33 @@ function GitHubStats({ repos, followers }: GitHubStatsProps) {
 	};
 	return (
 		<div className="flex flex-col items-center justify-center bg-[#1A2527] w-full rounded-xl border-b-4 border-[#131A1C] p-4 gap-4">
-			<span className="text-xl xl:text-2xl">GitHub Repos &amp; Followers</span>
+			<div className="text-xl xl:text-2xl flex justify-center">
+				<FloatingText className="text-center">
+					GitHub Repos &amp; Followers
+				</FloatingText>
+			</div>
 			<div className="flex flex-row items-center justify-center gap-2 w-full px-2">
-				<motion.div animate={getPopAnimation(repos)} className="bg-[#0F8FFA] border-b-4 border-[#10539A] rounded-xl text-right w-full p-2 text-2xl xl:text-4xl"><span>{repos}</span></motion.div>
+				<motion.div animate={getPopAnimation(repos)} className="bg-[#0F8FFA] border-b-4 border-[#10539A] rounded-xl flex justify-end w-full p-2 text-2xl xl:text-4xl">
+					<FloatingText>{repos.toString()}</FloatingText>
+				</motion.div>
 				<span className="text-2xl xl:text-4xl text-[#F64A40] w-[20%] xl:w-[25%] text-center">X</span>
-				<motion.div animate={getPopAnimation(followers)} className="bg-[#FC4B43] border-b-4 border-[#963332] rounded-xl text-left w-full p-2 text-2xl xl:text-4xl"><span>{followers}</span></motion.div>
+				<motion.div animate={getPopAnimation(followers)} className="bg-[#FC4B43] border-b-4 border-[#963332] rounded-xl flex justify-start w-full p-2 text-2xl xl:text-4xl">
+					<FloatingText>{followers.toString()}</FloatingText>
+				</motion.div>
 			</div>
 		</div>
 	);
 }
 
-function SettingsAndSocial(props: SettingsAndSocialProps) {
+function SettingsAndSocial(props: Omit<SidePanelProps, 'name' | 'title' | 'chipImage' | 'location' | 'gitHubUrl'>) {
+	const { isMotionEnabled, isCrtEnabled, toggleMotion, toggleCrt } = useSettings();
+
 	return (
 		<div className="flex flex-col items-center justify-center w-full h-[250px] xl:h-[320px]">
 			<div className="flex flex-row items-center justify-start gap-2 w-full h-full">
 				<div className="flex flex-col items-center justify-center gap-2 w-[30%] h-[80%] xl:w-[40%]">
-					<button className="bg-[#FC4B43] w-full h-full rounded-xl border-r-4 border-b-4 border-[#24251F] text-xl xl:text-2xl p-2" onClick={props.toggleShader}>{props.isShaderEnabled ? "Disable Motion" : "Enable Motion"}</button>
-					<button className="bg-[#E29103] w-full h-full rounded-xl border-r-4 border-b-4 border-[#24251F] text-xl xl:text-2xl p-2" onClick={props.toggleCrt}>{props.isCrtEnabled ? "Disable CRT" : "Enable CRT"}</button>
+					<button className="bg-[#FC4B43] w-full h-full rounded-xl border-r-4 border-b-4 border-[#24251F] text-xl xl:text-2xl p-2" onClick={toggleMotion}>{isMotionEnabled ? "Disable Motion" : "Enable Motion"}</button>
+					<button className="bg-[#E29103] w-full h-full rounded-xl border-r-4 border-b-4 border-[#24251F] text-xl xl:text-2xl p-2" onClick={toggleCrt}>{isCrtEnabled ? "Disable CRT" : "Enable CRT"}</button>
 				</div>
 				<div className="flex flex-col items-center justify-center gap-2 w-full h-full">
 					<div className="flex flex-row items-center justify-center gap-2 w-full">
@@ -143,18 +145,7 @@ export function SidePanel(props: SidePanelProps) {
 	const followers = fetcher.data?.followers?.totalCount ?? 0;
 
 	return (
-		<aside
-			className="
-				/* SHARED STYLES */
-				flex flex-col items-center border-[#3D4142] bg-[#232C2C] shadow-2xl transition-all gap-2 p-2 z-30
-				
-				/* MOBILE STYLES (Landing Page Mode) */
-				relative w-[calc(100%-1rem)] m-2 rounded-xl border-4 h-fit justify-start
-				
-				/* DESKTOP STYLES (Side Panel Mode) */
-				md:fixed md:left-14 md:top-0 md:h-screen md:w-72 md:xl:w-[512px] md:m-0 md:rounded-none md:border-y-0 md:border-l-4 md:border-r-4 md:justify-center
-			"
-		>
+		<aside className="flex flex-col items-center border-[#3D4142] bg-[#232C2C] shadow-2xl transition-all gap-2 p-2 z-30 relative w-[calc(100%-1rem)] m-2 rounded-xl border-4 h-fit justify-start md:fixed md:left-14 md:top-0 md:h-screen md:w-72 md:xl:w-[512px] md:m-0 md:rounded-none md:border-y-0 md:border-l-4 md:border-r-4 md:justify-center">
 			<Profile chipImage={props.chipImage} name={props.name} title={props.title} gitHubUrl={props.gitHubUrl} />
 			<Location location={props.location} />
 			<GitHubStats repos={repos} followers={followers} />

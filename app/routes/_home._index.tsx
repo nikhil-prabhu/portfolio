@@ -20,14 +20,17 @@ import { SiAnsible, SiCplusplus, SiGooglecloud, SiKubernetes, SiTerraform, SiTyp
 import { VscAzure } from "react-icons/vsc";
 import Container from "~/components/Container";
 import SectionBox from "~/components/SectionBox";
+import FloatingText from "~/components/FloatingText";
 
 export default function AboutIndex() {
 	return (
 		<SectionBox>
 			<div className="flex flex-col gap-8">
 				<section>
-					<h2 className="text-2xl xl:text-4xl text-white">
-						About Me
+					<h2 className="text-3xl xl:text-5xl text-white flex justify-start">
+						<FloatingText>
+							About Me
+						</FloatingText>
 					</h2>
 					{resources.about.map((paragraph, index) => (
 						<p key={index} className="mb-4 mt-4 text-lg xl:text-xl">

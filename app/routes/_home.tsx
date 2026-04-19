@@ -1,5 +1,6 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
 import { NavLink, Outlet } from "@remix-run/react";
+import FloatingText from "~/components/FloatingText";
 
 
 export const meta: MetaFunction = () => {
@@ -12,7 +13,11 @@ export const meta: MetaFunction = () => {
 export default function HomeLayout() {
   return (
     <div className="flex flex-col items-center justify-start gap-8 w-full h-full">
-      <h1 className="text-4xl xl:text-7xl text-white text-center">Welcome to my Portfolio</h1>
+      <h1 className="text-5xl xl:text-7xl text-white">
+        <FloatingText className="text-center">
+          Welcome to my Portfolio
+        </FloatingText>
+      </h1>
 
       <div className="flex flex-col md:flex-row items-center justify-center gap-4 rounded-xl border-b-4 border-[#131A1C] bg-[#38464C] p-4 w-full md:w-auto">
         <NavLink

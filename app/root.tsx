@@ -14,6 +14,7 @@ import { SidePanel } from "./components/SidePanel";
 import { useEffect, useState } from "react";
 import { VaporwaveBackground } from "~/components/VaporwaveBackground";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import { SettingsProvider, useSettings } from "./context/SettingsContext";
 
 import Background from "/bg.jpg"
 
@@ -21,13 +22,14 @@ export const links: LinksFunction = () => [
     { rel: "icon", href: favicon, type: "image/gif" },
 ];
 
-function BackgroundProvider({ isShaderEnabled }: { isShaderEnabled: boolean }) {
+function BackgroundProvider() {
+    const { isMotionEnabled } = useSettings();
     const [isHydrated, setIsHydrated] = useState(false);
     useEffect(() => setIsHydrated(true), []);
     return (
         <div className="fixed inset-0 z-0 overflow-hidden bg-[#10181A]">
             <AnimatePresence mode="wait">
-                {isShaderEnabled ? (
+                {isMotionEnabled ? (
                     <motion.div key="shader" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 h-full w-full">
                         {isHydrated && <VaporwaveBackground />}
                     </motion.div>
@@ -41,12 +43,13 @@ function BackgroundProvider({ isShaderEnabled }: { isShaderEnabled: boolean }) {
     );
 }
 
-function CrtOverlay({ enabled }: { enabled: boolean }) {
+function CrtOverlay() {
+    const { isCrtEnabled } = useSettings();
     const [isHydrated, setIsHydrated] = useState(false);
     useEffect(() => setIsHydrated(true), []);
     return (
         <AnimatePresence>
-            {enabled && isHydrated && (
+            {isCrtEnabled && isHydrated && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="crt-screen pointer-events-none fixed inset-0 z-50" />
             )}
         </AnimatePresence>
@@ -71,23 +74,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
     );
 }
 
-export default function App() {
-    const [isShaderEnabled, setIsShaderEnabled] = useState(true);
-    const [isCrtEnabled, setIsCrtEnabled] = useState(true);
+function AppContent() {
+    const { isMotionEnabled: isShaderEnabled } = useSettings();
     const controls = useAnimation();
-
-    useEffect(() => {
-        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-        if (motionQuery.matches) {
-            setIsShaderEnabled(false);
-            setIsCrtEnabled(false);
-        }
-    }, []);
 
     useEffect(() => {
         const handleGlobalClick = (e: MouseEvent) => {
             if (!isShaderEnabled) return;
-
             const target = e.target as HTMLElement;
             if (target.closest("button") || target.closest("a")) {
                 controls.start({
@@ -98,7 +91,6 @@ export default function App() {
                 });
             }
         };
-
         window.addEventListener("mousedown", handleGlobalClick);
         return () => window.removeEventListener("mousedown", handleGlobalClick);
     }, [controls, isShaderEnabled]);
@@ -115,30 +107,28 @@ export default function App() {
         linkedInId: "in/nikhil-prabhu31",
         emailUrl: "mailto:nikhilprabhu98@gmail.com",
         matrixUrl: "https://matrix.to/#/@nikhilprabhu:matrix.org",
-        isShaderEnabled,
-        isCrtEnabled,
-        toggleShader: () => setIsShaderEnabled(prev => !prev),
-        toggleCrt: () => setIsCrtEnabled(prev => !prev),
     };
 
     return (
         <div className="relative min-h-screen w-full overflow-hidden bg-[#10181A]">
-            <BackgroundProvider isShaderEnabled={isShaderEnabled} />
-
-            <motion.div
-                animate={controls}
-                className="relative z-10 w-full min-h-screen"
-            >
+            <BackgroundProvider />
+            <motion.div animate={controls} className="relative z-10 w-full min-h-screen">
                 <SidePanel {...commonProps} />
-
                 <main className="pt-32 md:pl-80 xl:pl-[600px] md:pt-0">
                     <div className="p-2 md:p-8">
                         <Outlet />
                     </div>
                 </main>
             </motion.div>
-
-            <CrtOverlay enabled={isCrtEnabled} />
+            <CrtOverlay />
         </div>
+    );
+}
+
+export default function App() {
+    return (
+        <SettingsProvider>
+            <AppContent />
+        </SettingsProvider>
     );
 }

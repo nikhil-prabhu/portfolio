@@ -8,6 +8,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import Container from "~/components/Container";
 import SectionBox from "~/components/SectionBox";
 import { MetaBar, MetaPill, MetaTitle, MetaDataBlock, MetaInfo } from "~/components/MetaBar";
+import FloatingText from "~/components/FloatingText";
 
 export default function ExperienceView() {
 	const [selectedIndex, setSelectedIndex] = useState(0);
@@ -18,8 +19,10 @@ export default function ExperienceView() {
 			<SectionBox>
 				<div className="flex flex-col gap-8">
 					<section>
-						<h2 className="text-2xl xl:text-4xl text-white">
-							Experience
+						<h2 className="text-3xl xl:text-5xl text-white flex justify-start">
+							<FloatingText>
+								Experience
+							</FloatingText>
 						</h2>
 						<span className="text-lg xl:text-xl">
 							Click a card to learn more about my experience. (You may have to scroll down to view the details)

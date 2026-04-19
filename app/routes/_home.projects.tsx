@@ -10,6 +10,7 @@ import { FaBalanceScale, FaCode, FaStar } from "react-icons/fa";
 import SectionBox from "~/components/SectionBox";
 import Container from "~/components/Container";
 import { MetaBar, MetaDataBlock, MetaInfo, MetaPill, MetaTitle } from "~/components/MetaBar";
+import FloatingText from "~/components/FloatingText";
 
 const getLanguageIcon = (langName: string | undefined): IconType => {
 	switch (langName?.toLowerCase()) {
@@ -44,7 +45,11 @@ export default function ProjectsView() {
 			<SectionBox>
 				<div className="flex flex-col gap-8">
 					<section>
-						<h2 className="text-2xl xl:text-4xl">Projects</h2>
+						<h2 className="text-3xl xl:text-5xl text-white flex justify-start">
+							<FloatingText>
+								Projects
+							</FloatingText>
+						</h2>
 						<span className="text-lg xl:text-xl">Click a card to learn more about my projects. (You may have to scroll down to view the details)</span>
 					</section>
 
