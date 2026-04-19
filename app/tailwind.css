@@ -15,7 +15,7 @@
 
 html,
 body {
-  @apply text-lg text-white text-bloom;
+  @apply text-lg text-white;
   font-family: "m6x11plus", monospace;
 }
 
@@ -51,5 +51,18 @@ button {
       rgba(0, 0, 0, 0.3) 150%
     );
     animation: crt-flicker 0.1s infinite;
+  }
+}
+
+@layer utilities {
+  .text-white {
+    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5),
+      2px 2px 0px rgba(0, 0, 0, 0.4);
+  }
+
+  .text-white-pure {
+    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+    text-shadow: none !important;
   }
 }
