@@ -91,7 +91,7 @@ function GitHubStats({ repos, followers }: GitHubStatsProps) {
 				<motion.div animate={getPopAnimation(repos)} className="bg-[#0F8FFA] border-b-4 border-[#10539A] rounded-xl flex justify-end w-full p-2 text-2xl xl:text-4xl">
 					<FloatingText>{repos.toString()}</FloatingText>
 				</motion.div>
-				<span className="text-2xl xl:text-4xl text-[#F64A40] w-[20%] xl:w-[25%] text-center">X</span>
+				<span className="text-2xl xl:text-4xl text-[#F64A40] w-[20%] xl:w-[25%] text-center text-shadow-none">X</span>
 				<motion.div animate={getPopAnimation(followers)} className="bg-[#FC4B43] border-b-4 border-[#963332] rounded-xl flex justify-start w-full p-2 text-2xl xl:text-4xl">
 					<FloatingText>{followers.toString()}</FloatingText>
 				</motion.div>

@@ -101,7 +101,7 @@ export default function ProjectsView() {
 								<Container className="p-4 text-lg xl:text-xl">
 									{activeRepo.description || "No description provided."}
 									{activeRepo.url && (
-										<a href={activeRepo.url} target="_blank" rel="noopener noreferrer" className="text-[#0F8FFA] underline ml-2">
+										<a href={activeRepo.url} target="_blank" rel="noopener noreferrer" className="text-[#0F8FFA] text-shadow-none underline ml-2">
 											View on GitHub
 										</a>
 									)}

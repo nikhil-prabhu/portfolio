@@ -42,7 +42,7 @@ export const MetaDataBlock = ({
 export const MetaInfo = ({ icon: Icon, label }: { icon: IconType; label: string }) => (
 	<div className="flex flex-row items-center gap-2 shrink-0 w-full xl:w-auto xl:max-w-[256px] pr-2">
 		<Icon className="shrink-0" size={20} />
-		<div className="bg-[#1A2527] text-center rounded-xl p-2 px-4 w-full text-[#E29103] border-b-2 border-[#131A1C]">
+		<div className="bg-[#1A2527] text-center rounded-xl p-2 px-4 w-full text-[#E29103] text-shadow-none border-b-2 border-[#131A1C]">
 			{label}
 		</div>
 	</div>
