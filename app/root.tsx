@@ -13,7 +13,7 @@ import { LinksFunction } from "@remix-run/cloudflare";
 import { SidePanel } from "./components/SidePanel";
 import { useEffect, useState } from "react";
 import { VaporwaveBackground } from "~/components/VaporwaveBackground";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import { motion, AnimatePresence, useAnimation, MotionConfig } from "framer-motion";
 import { SettingsProvider, useSettings } from "./context/SettingsContext";
 
 import Background from "/bg.jpg"
@@ -75,12 +75,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 function AppContent() {
-    const { isMotionEnabled: isShaderEnabled } = useSettings();
+    const { isMotionEnabled } = useSettings();
     const controls = useAnimation();
 
     useEffect(() => {
         const handleGlobalClick = (e: MouseEvent) => {
-            if (!isShaderEnabled) return;
+            if (!isMotionEnabled) return;
             const target = e.target as HTMLElement;
             if (target.closest("button") || target.closest("a")) {
                 controls.start({
@@ -93,7 +93,7 @@ function AppContent() {
         };
         window.addEventListener("mousedown", handleGlobalClick);
         return () => window.removeEventListener("mousedown", handleGlobalClick);
-    }, [controls, isShaderEnabled]);
+    }, [controls, isMotionEnabled]);
 
     const commonProps = {
         name: "Nikhil Prabhu",
@@ -110,18 +110,20 @@ function AppContent() {
     };
 
     return (
-        <div className="relative min-h-screen w-full overflow-hidden bg-[#10181A]">
-            <BackgroundProvider />
-            <motion.div animate={controls} className="relative z-10 w-full min-h-screen">
-                <SidePanel {...commonProps} />
-                <main className="md:pl-80 xl:pl-[600px]">
-                    <div className="p-2 md:p-8">
-                        <Outlet />
-                    </div>
-                </main>
-            </motion.div>
-            <CrtOverlay />
-        </div>
+        <MotionConfig reducedMotion={isMotionEnabled ? "never" : "always"}>
+            <div className="relative min-h-screen w-full overflow-hidden bg-[#10181A]">
+                <BackgroundProvider />
+                <motion.div animate={controls} className="relative z-10 w-full min-h-screen">
+                    <SidePanel {...commonProps} />
+                    <main className="md:pl-80 xl:pl-[600px]">
+                        <div className="p-2 md:p-8">
+                            <Outlet />
+                        </div>
+                    </main>
+                </motion.div>
+                <CrtOverlay />
+            </div>
+        </MotionConfig>
     );
 }
 
