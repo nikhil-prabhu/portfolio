@@ -4,6 +4,7 @@ import Card from "~/components/Card";
 
 import EGYMLogo from "/egym.svg";
 import SAPLogo from "/sap.svg";
+import AutodeskLogo from "/autodesk.svg";
 import { FaLocationDot } from "react-icons/fa6";
 import Container from "~/components/Container";
 import SectionBox from "~/components/SectionBox";
@@ -92,6 +93,16 @@ export default function ExperienceView() {
 }
 
 const experience = [
+	{
+		id: "autodesk-senior-software-engineer",
+		company: "Autodesk",
+		role: "Senior Software Engineer",
+		logo: AutodeskLogo,
+		startDate: "Apr 2026",
+		endDate: "Present",
+		location: "Bangalore, India",
+		tasks: [],
+	},
 	{
 		id: "egym-systems-engineer",
 		company: "EGYM",
