@@ -9,10 +9,12 @@ import SectionBox from "~/components/SectionBox";
 import Container from "~/components/Container";
 import { MetaBar, MetaPill, MetaTitle, MetaDataBlock, MetaInfo } from "~/components/MetaBar";
 import FloatingText from "~/components/FloatingText";
+import { useHorizontalScroll } from "~/hooks/useHorizontalScroll";
 
 export default function EducationView() {
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const activeEducation = education[selectedIndex];
+	const scrollRef = useHorizontalScroll();
 
 	return (
 		<div className="flex flex-col items-center justify-center gap-8 w-full">
@@ -24,20 +26,31 @@ export default function EducationView() {
 								Education
 							</FloatingText>
 						</h2>
-						<span className="text-lg xl:text-xl">
-							Click a card to learn more about my education. (You may have to scroll down to view the details)
+						<span className="text-lg xl:text-xl text-white/80">
+							Click a card to learn more about my education.
 						</span>
 					</section>
 
-					<Container className="flex flex-wrap gap-6 items-center justify-center p-4">
+					<Container ref={scrollRef} className="
+						w-full flex gap-6 px-4 pt-10 pb-12
+						/* Carousel Mode */
+						flex-nowrap overflow-x-auto justify-start snap-x snap-mandatory scrollbar-hide
+						/* Grid Mode */
+						xl:flex-wrap xl:justify-center xl:overflow-visible xl:pb-4
+					">
 						{education.map((exp, index) => (
-							<Card
+							<div
 								key={exp.id}
-								faceIcon={exp.logo}
-								label={`${exp.degree} (${exp.type})`}
-								isSelected={selectedIndex === index}
-								onClick={() => setSelectedIndex(index)}
-							/>
+								className="snap-center shrink-0 w-[180px] md:w-[220px]"
+							>
+								<Card
+									index={index}
+									faceIcon={exp.logo}
+									label={`${exp.degree} (${exp.type})`}
+									isSelected={selectedIndex === index}
+									onClick={() => setSelectedIndex(index)}
+								/>
+							</div>
 						))}
 					</Container>
 				</div>
@@ -56,14 +69,11 @@ export default function EducationView() {
 						<div className="flex flex-col gap-8">
 							<MetaBar>
 								<MetaPill>{activeEducation.degree}</MetaPill>
-
 								<MetaTitle>{activeEducation.institution}</MetaTitle>
-
 								<MetaDataBlock
 									leftLabel={activeEducation.startDate}
 									rightLabel={activeEducation.endDate}
 								/>
-
 								<MetaInfo
 									icon={FaLocationDot}
 									label={activeEducation.location}
@@ -79,7 +89,7 @@ export default function EducationView() {
 									</ul>
 								) : (
 									<p className="text-lg xl:text-xl">
-										No specific tasks available for this role.
+										No specific tasks available for this education record.
 									</p>
 								)}
 							</Container>

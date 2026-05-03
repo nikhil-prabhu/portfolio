@@ -11,6 +11,7 @@ import SectionBox from "~/components/SectionBox";
 import Container from "~/components/Container";
 import { MetaBar, MetaDataBlock, MetaInfo, MetaPill, MetaTitle } from "~/components/MetaBar";
 import FloatingText from "~/components/FloatingText";
+import { useHorizontalScroll } from "~/hooks/useHorizontalScroll";
 
 const getLanguageIcon = (langName: string | undefined): IconType => {
 	switch (langName?.toLowerCase()) {
@@ -30,6 +31,7 @@ const getLanguageIcon = (langName: string | undefined): IconType => {
 export default function ProjectsView() {
 	const fetcher = useFetcher<GitHubRepository[]>();
 	const [selectedIndex, setSelectedIndex] = useState(0);
+	const scrollRef = useHorizontalScroll();
 
 	useEffect(() => {
 		if (fetcher.state === "idle" && !fetcher.data) {
@@ -50,25 +52,37 @@ export default function ProjectsView() {
 								Projects
 							</FloatingText>
 						</h2>
-						<span className="text-lg xl:text-xl">Click a card to learn more about my projects. (You may have to scroll down to view the details)</span>
+						<span className="text-lg xl:text-xl text-white/80">
+							Click a card to learn more about my projects.
+						</span>
 					</section>
 
-					<Container className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-8 gap-x-4 justify-items-center p-4">
+					<Container ref={scrollRef} className="
+						w-full flex gap-6 px-4 pt-10 pb-12
+						/* Carousel Mode */
+						flex-nowrap overflow-x-auto justify-start snap-x snap-mandatory scrollbar-hide
+						/* Grid Mode */
+						xl:flex-wrap xl:justify-center xl:overflow-visible xl:pb-4
+					">
 						{[...Array(6)].map((_, index) => {
 							const repo = data?.[index];
-							const isLoading = !data; // Loading the whole set
+							const isLoading = !data;
 							const LangIcon = getLanguageIcon(repo?.primaryLanguage?.name);
 
 							return (
-								<Card
+								<div
 									key={index}
-									index={index}
-									faceIcon={repo ? <LangIcon size={32} color={repo.primaryLanguage?.color || "#fff"} /> : undefined}
-									label={repo?.name}
-									isLoading={isLoading}
-									isSelected={data ? selectedIndex === index : false}
-									onClick={() => setSelectedIndex(index)}
-								/>
+									className="snap-center shrink-0 w-[180px] md:w-[220px]"
+								>
+									<Card
+										index={index}
+										faceIcon={repo ? <LangIcon size={32} color={repo.primaryLanguage?.color || "#000"} /> : undefined}
+										label={repo?.name}
+										isLoading={isLoading}
+										isSelected={data ? selectedIndex === index : false}
+										onClick={() => setSelectedIndex(index)}
+									/>
+								</div>
 							);
 						})}
 					</Container>
@@ -99,7 +113,7 @@ export default function ProjectsView() {
 								</MetaBar>
 
 								<Container className="p-4 text-lg xl:text-xl">
-									{activeRepo.description || "No description provided."}
+									{activeRepo.description || "No description provided.[cite: 4]"}
 									{activeRepo.url && (
 										<a href={activeRepo.url} target="_blank" rel="noopener noreferrer" className="text-[#0F8FFA] text-shadow-none underline ml-2">
 											View on GitHub

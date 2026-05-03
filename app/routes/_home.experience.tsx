@@ -10,10 +10,12 @@ import Container from "~/components/Container";
 import SectionBox from "~/components/SectionBox";
 import { MetaBar, MetaPill, MetaTitle, MetaDataBlock, MetaInfo } from "~/components/MetaBar";
 import FloatingText from "~/components/FloatingText";
+import { useHorizontalScroll } from "~/hooks/useHorizontalScroll";
 
 export default function ExperienceView() {
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const activeExperience = experience[selectedIndex];
+	const scrollRef = useHorizontalScroll();
 
 	return (
 		<div className="flex flex-col items-center justify-center gap-8 w-full">
@@ -25,20 +27,31 @@ export default function ExperienceView() {
 								Experience
 							</FloatingText>
 						</h2>
-						<span className="text-lg xl:text-xl">
-							Click a card to learn more about my experience. (You may have to scroll down to view the details)
+						<span className="text-lg xl:text-xl text-white/80">
+							Click a card to learn more about my experience.
 						</span>
 					</section>
 
-					<Container className="flex flex-wrap gap-6 items-center justify-center p-4">
+					<Container ref={scrollRef} className="
+						w-full flex gap-6 px-4 pt-10 pb-12
+						/* Carousel Mode: Active until 1280px width */
+						flex-nowrap overflow-x-auto justify-start snap-x snap-mandatory scrollbar-hide
+						/* Grid Mode: Switches when room for 2+ cards is guaranteed */
+						xl:flex-wrap xl:justify-center xl:overflow-visible xl:pb-4
+					">
 						{experience.map((exp, index) => (
-							<Card
+							<div
 								key={exp.id}
-								faceIcon={exp.logo}
-								label={exp.role}
-								isSelected={selectedIndex === index}
-								onClick={() => setSelectedIndex(index)}
-							/>
+								className="snap-center shrink-0 w-[180px] md:w-[220px]"
+							>
+								<Card
+									index={index}
+									faceIcon={exp.logo}
+									label={exp.role}
+									isSelected={selectedIndex === index}
+									onClick={() => setSelectedIndex(index)}
+								/>
+							</div>
 						))}
 					</Container>
 				</div>
@@ -57,14 +70,11 @@ export default function ExperienceView() {
 						<div className="flex flex-col gap-8">
 							<MetaBar>
 								<MetaPill>{activeExperience.company}</MetaPill>
-
 								<MetaTitle>{activeExperience.role}</MetaTitle>
-
 								<MetaDataBlock
 									leftLabel={activeExperience.startDate}
 									rightLabel={activeExperience.endDate}
 								/>
-
 								<MetaInfo
 									icon={FaLocationDot}
 									label={activeExperience.location}
