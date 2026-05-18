@@ -28,5 +28,12 @@ export default defineConfig({
   server: {
     host: true,
     port: 5173,
+    allowedHosts: [
+      "alduin.local",
+      "paarthurnax.local",
+      "sahrotaar.local",
+      "naaslaarum.local",
+      "voslaarum.local",
+    ],
   },
 });
