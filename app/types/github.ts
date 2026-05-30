@@ -18,7 +18,7 @@ export interface GitHubRepository {
 }
 
 export interface GitHubRepositories {
-	totalCount: number;
+	stargazerCount: number;
 }
 
 export interface GitHubFollowers {

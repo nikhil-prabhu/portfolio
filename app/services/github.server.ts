@@ -84,23 +84,30 @@ export async function getStats(
 		}
 
 		const json = await response.json() as any;
+		const userData = json?.data?.user;
 
-		if (!json.data?.user) {
+		if (!userData) {
 			console.warn(`GitHub user "${username}" not found or unauthorized.`);
-			return { repositories: { totalCount: 0 }, followers: { totalCount: 0 } };
+			return { repositories: { stargazerCount: 0 }, followers: { totalCount: 0 } };
 		}
+
+		const repoNodes = userData?.repositories?.nodes || [];
+		const totalStars = repoNodes.reduce((acc: number, repo: any) => {
+			return acc + (repo?.stargazers?.totalCount || 0);
+		}, 0);
+		const totalFollowers = userData?.followers?.totalCount || 0;
 
 		return {
 			repositories: {
-				totalCount: json.data.user.repositories.totalCount || 0,
+				stargazerCount: totalStars,
 			},
 			followers: {
-				totalCount: json.data.user.followers.totalCount || 0,
+				totalCount: totalFollowers,
 			},
 		};
 
 	} catch (error) {
 		console.error("Failed to fetch GitHub stats:", error);
-		return { repositories: { totalCount: 0 }, followers: { totalCount: 0 } };
+		return { repositories: { stargazerCount: 0 }, followers: { totalCount: 0 } };
 	}
 }

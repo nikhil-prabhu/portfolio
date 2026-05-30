@@ -1,7 +1,16 @@
 query GetStats($username: String!) {
   user(login: $username) {
-    repositories(first: 100, ownerAffiliations: OWNER) {
-      totalCount
+    repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      nodes {
+        name
+        stargazers {
+          totalCount
+        }
+      }
     }
     followers {
       totalCount

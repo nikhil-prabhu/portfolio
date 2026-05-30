@@ -15,7 +15,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 	} catch (error) {
 		console.error("GitHub Fetch Failed:", error);
 		return Response.json(
-			{ repositories: { totalCount: 0 }, followers: { totalCount: 0 } },
+			{ repositories: { stargazerCount: 0 }, followers: { totalCount: 0 } },
 			{ status: 200 }
 		);
 	}

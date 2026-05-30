@@ -9,7 +9,7 @@ import { useSettings } from "~/context/SettingsContext";
 
 type ProfileProps = { chipImage: string; name: string; title: string; gitHubUrl: string; }
 type LocationProps = { location: string; }
-type GitHubStatsProps = { repos: number; followers: number; }
+type GitHubStatsProps = { stars: number; followers: number; }
 
 type SidePanelProps = {
 	chipImage: string; name: string; title: string; location: string; gitHubUrl: string;
@@ -75,7 +75,7 @@ function Location({ location }: LocationProps) {
 	);
 }
 
-function GitHubStats({ repos, followers }: GitHubStatsProps) {
+function GitHubStats({ stars, followers }: GitHubStatsProps) {
 	const getPopAnimation = (val: number): TargetAndTransition => {
 		if (val === 0) return { scale: 1 };
 		return { scale: [1, 1.2, 0.95, 1], transition: { duration: 0.4, times: [0, 0.2, 0.5, 1], ease: "easeOut" } };
@@ -84,12 +84,12 @@ function GitHubStats({ repos, followers }: GitHubStatsProps) {
 		<div className="flex flex-col items-center justify-center bg-[#1A2527] w-full rounded-xl border-b-4 border-[#131A1C] p-4 gap-4">
 			<div className="text-xl xl:text-2xl flex justify-center">
 				<FloatingText className="text-center">
-					GitHub Repos &amp; Followers
+					GitHub Stars &amp; Followers
 				</FloatingText>
 			</div>
 			<div className="flex flex-row items-center justify-center gap-2 w-full px-2">
-				<motion.div animate={getPopAnimation(repos)} className="bg-[#0F8FFA] border-b-4 border-[#10539A] rounded-xl flex justify-end w-full p-2 text-2xl xl:text-4xl">
-					<FloatingText>{repos.toString()}</FloatingText>
+				<motion.div animate={getPopAnimation(stars)} className="bg-[#0F8FFA] border-b-4 border-[#10539A] rounded-xl flex justify-end w-full p-2 text-2xl xl:text-4xl">
+					<FloatingText>{stars.toString()}</FloatingText>
 				</motion.div>
 				<span className="text-2xl xl:text-4xl text-[#F64A40] w-[20%] xl:w-[25%] text-center text-shadow-none">X</span>
 				<motion.div animate={getPopAnimation(followers)} className="bg-[#FC4B43] border-b-4 border-[#963332] rounded-xl flex justify-start w-full p-2 text-2xl xl:text-4xl">
@@ -152,14 +152,14 @@ export function SidePanel(props: SidePanelProps) {
 		}
 	}, [fetcher]);
 
-	const repos = fetcher.data?.repositories?.totalCount ?? 0;
+	const stars = fetcher.data?.repositories?.stargazerCount ?? 0;
 	const followers = fetcher.data?.followers?.totalCount ?? 0;
 
 	return (
 		<aside className="flex flex-col items-center border-[#3D4142] bg-[#232C2C] shadow-2xl transition-all gap-2 p-2 z-30 relative w-[calc(100%-1rem)] m-2 rounded-xl border-4 h-fit justify-start md:fixed md:left-14 md:top-0 md:h-screen md:w-72 md:xl:w-[512px] md:m-0 md:rounded-none md:border-y-0 md:border-l-4 md:border-r-4 md:justify-center">
 			<Profile chipImage={props.chipImage} name={props.name} title={props.title} gitHubUrl={props.gitHubUrl} />
 			<Location location={props.location} />
-			<GitHubStats repos={repos} followers={followers} />
+			<GitHubStats stars={stars} followers={followers} />
 			<SettingsAndSocial {...props} />
 
 			<div className="flex flex-col items-center md:absolute md:bottom-2 mt-auto pb-2 w-full">
