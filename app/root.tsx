@@ -99,7 +99,7 @@ function AppContent() {
         name: "Nikhil Prabhu",
         title: "The Engineer",
         chipImage: Profile,
-        location: "Coimbatore, India",
+        location: "Bengaluru, India",
         gitHubUrl: "https://github.com/nikhil-prabhu",
         steamUrl: "https://steamcommunity.com/id/dextrocardiac/",
         instagramUrl: "https://instagram.com/_nikhilprabhu",
